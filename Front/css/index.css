@@ -1,0 +1,36 @@
+.nr {
+    position: absolute;
+    z-index: 5;
+    padding-top: 5%;
+    padding-left: 5%;
+}
+
+.bgimg {
+    height: 100vh;
+    width: 100%;
+    object-fit: cover;
+    z-index: -10;
+    opacity: 0.5;
+    filter: blur(5px);
+}
+
+.card-img-overlay {
+    overflow-y: auto;
+}
+
+.card-img{
+  filter: brightness(40%);
+  height: 50vh;
+  object-fit: cover;
+  justify-content: center;
+}
+
+.headH1 {
+    background: linear-gradient(75deg, rgba(255, 12, 204, 1) 0%, rgb(0, 217, 255) 33.33%, rgba(255, 255, 255, 0) 66.67%, rgba(255, 255, 255, 0) 100%);
+    background-size: 300% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation-name:colorTitle;
+    animation-duration: 5s;
+}

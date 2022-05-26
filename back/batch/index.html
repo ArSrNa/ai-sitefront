@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ArAI批量-图像审核-鉴黄</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcdn.net/ajax/libs/json2html/2.1.0/json2html.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.3.0/layer.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/ArSrNa/ArUI-Progress/arloading.css" rel="stylesheet">
+<link href="index.css" rel="stylesheet">
+    </head>
+  <body style="padding-top: 70px">
+<script src="https://ai.arsrna.cn/header.js"></script>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="https://www.arsrna.cn" target="_blank">Ar-Sr-Na 云计算项目</a></li>
+      <li class="breadcrumb-item"><a href="https://ai.arsrna.cn">AI技能中心(内测)</a></li>
+      <li class="breadcrumb-item active" aria-current="page">图像审核-鉴黄</li>
+    </ol>
+  </nav>
+
+    <section>      
+      <script src="index.js"></script>
+      <div class="container">
+        <label for="imgfile" class="form-label">请保证内容在5M以内，分辨率大于256*256，数量小于10张，请勿上传隐私照片！</label>
+        <div class="input-group">
+          <input class="form-control" type="file" class="custom-file-input" id="imgfile" accept=".bmp,.jpg,.png,.tif,.gif,.pcx,.tga,.exif,.fpx,.svg,.psd,.cdr,.pcd,.dxf,.ufo,.eps,.ai,.raw,.WMF,.webp,.avif,.apng" multiple>
+          <button class="btn btn-primary" onclick="ToBase64();">提交</button>
+        </div>
+        <div id="doing" class="container bg" style="background: #EEEEEE;font-family: '思源黑体 CN Light';display: none">
+          <div class="row">
+        <div class="col-1">
+          <i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></div>
+          <div class="col-11"><h5>Ar-Sr-Na AI 提交中</h5>
+            <div class="ar-line">
+          <div class="arloading"></div></div></div></div></div>
+
+<div class="row" id="batchRes">
+ 
+</div>
+          </div>
+          
+        </div>
+    
+    </div>
+<script src="https://www.arsrna.cn/footer.js"></script>
+</body>
+</html>

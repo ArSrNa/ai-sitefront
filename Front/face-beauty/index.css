@@ -1,0 +1,15 @@
+.result {
+    min-height: 500px;
+}
+
+.restext {
+    position: absolute;
+    z-index: 5;
+    padding-top: 5%;
+    padding-left: 5%;
+}
+
+.result {
+    position: relative;
+    height: auto;
+}

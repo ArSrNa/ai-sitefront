@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://unpkg.com/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <input type="file" id="file">
+    <button onclick="upLoad(document.getElementById('file').files[0])">Ar-Sr-Na</button>
+</body>
+
+
+<script>
+var cos = new COS({
+   // 必选参数
+   getAuthorization: function (options, callback) {
+       $.ajax({
+        url:'https://api.arsrna.cn/release/arcos',
+        type:'GET',
+        success(data) {
+            var data=JSON.parse(data)
+            console.log(data)
+           var credentials = data && data.credentials;
+           if (!data || !credentials) return console.error('credentials invalid');
+           callback({
+               TmpSecretId: credentials.tmpSecretId,
+               TmpSecretKey: credentials.tmpSecretKey,
+               SecurityToken: credentials.sessionToken,
+               // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+               StartTime: data.startTime, // 时间戳，单位秒，如：1580000000
+               ExpiredTime: data.expiredTime, // 时间戳，单位秒，如：1580000900
+           });
+       }
+   });
+}
+});
+
+
+
+function upLoad(file){
+    filekey = "ArAI"+btoa(Math.random()*100000000)+Math.random().toString(36).slice(-8)
+    cos.putObject({
+    Bucket: 'temparai-1257609559', /* 必须 */
+    Region: 'ap-hongkong',     /* 存储桶所在地域，必须字段 */
+    Key: filekey,              /* 必须 */
+    StorageClass: 'STANDARD',
+    Body: file, // 上传文件对象
+    onProgress: function(progressData) {
+        console.log(JSON.stringify(progressData));
+    }
+ }, function(err, data) {
+    console.log(err || data);
+ });
+}
+</script>

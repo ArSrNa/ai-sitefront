@@ -1,0 +1,30 @@
+.resimg {
+	opacity:0.5;
+	/*filter:blur(5px);*/
+	object-fit:contain;
+	max-height: 400px;
+}
+
+.card-img-overlay,.resDetail {
+	overflow-y: auto;
+}
+
+.resDetail{
+	max-height: 400px;
+}
+
+.result {
+	min-height:500px;
+}
+
+.restext {
+	position:absolute;
+	z-index:5;
+	padding-top:5%;
+	padding-left:5%;
+}
+
+.result {
+	position:relative;
+	height:auto;
+}
