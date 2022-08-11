@@ -34,14 +34,15 @@ function display(head,data) {
 
 function generate(b64data) {
  $.ajax({
+    headers:{token:tokenAll.access_token},
     type: "POST",
     url: "https://api.arsrna.cn/release/araiphp",
-    data: '{"FileContent": "' + b64data + '"}',
-    dataType:'text',
-  success: function(msg){
-console.log(msg);
+    data: JSON.stringify({"FileContent": b64data}),
+    dataType:'json',
+   success: function(msg){
+    console.log(msg);
 
-if(("errorCode" in JSON.parse(msg))) {
+if(("errorCode" in msg)) {
 	alert("发生错误："+msg);
 	window.location.reload()
 }
@@ -53,8 +54,8 @@ result.generate(msg);
     },
 
   error: function(err){
-console.log(err.status + err.statusText);
-alert('提交失败：' + err.status + err.statusText);
+console.log(err.responseJSON);
+//alert('提交失败：' + err.status + err.statusText);
 }
 
 });
@@ -74,27 +75,25 @@ layer.open({
 
 
 var result = {
-	generate:function(result) {
+	generate:function(rej) {
 		var txadv = {"Block":"建议屏蔽","Review":"建议复审","Pass":"建议通过"};
         var sugIcon = {"Block":"fa-exclamation-triangle","Review":"fa-question-circle","Pass":"fa-check-circle"};
 		var textLabel = {"Normal":"正常","Porn":"色情","Abuse":"谩骂","Ad":"广告","Custom":"自定义图片","Sexy":"性感内容","Illegal":"违法的"};
 		var reshead = $('#reshead');
 		var resnr = $('#resnr');
-		var rej = JSON.parse(result);
 		var progress = document.getElementsByClassName('totalProgress');
 		reshead.html('<i class="fa '+sugIcon[rej.Suggestion]+'" aria-hidden="true"></i>'+txadv[rej.Suggestion]);
 
 		if(textLabel[rej.Label]==null) {
-		resnr.html(rej.Label+'-'+rej.SubLabel+'<br />程度：'+rej.Score);
-		$('#totalHeader').html('场景：'+rej.Label+'<br />'+txadv[rej.Suggestion]);
-        $('#totalResult').html(rej.Label+'-'+rej.SubLabel+'<br />疑似度：'+rej.Score);
+		resnr.html(`${rej.Label} - ${rej.SubLabel}<br />程度：${rej.Score}`);
+		$('#totalHeader').html(`场景：${rej.Label}<br />${txadv[rej.Suggestion]}`);
+    $('#totalResult').html(`${rej.Label} - ${rej.SubLabel}<br />疑似度：${rej.Score}`);
 
 		}
 		else {
-        resnr.html(textLabel[rej.Label]+'-'+rej.SubLabel+'<br />程度：'+rej.Score);
-        $('#totalHeader').html('场景：'+textLabel[rej.Label]+'<br />'+txadv[rej.Suggestion]);
-        $('#totalResult').html(textLabel[rej.Label]+'-'+rej.SubLabel+'<br />疑似度：'+rej.Score);
-
+        resnr.html(`${textLabel[rej.Label]} - ${rej.SubLabel}<br />程度：${rej.Score}`);
+        $('#totalHeader').html(`场景：+${textLabel[rej.Label]}<br />${txadv[rej.Suggestion]}`);
+        $('#totalResult').html(`${textLabel[rej.Label]} - ${rej.SubLabel} <br />疑似度：${rej.Score}`);
     }
 
     $('#totalRes').css('display','')
@@ -111,10 +110,10 @@ var result = {
   }
   return i;
  }
-    resimageURL="https://bspcms-1256309736.cos.ap-guangzhou.myqcloud.com/ImageModeration/1257609559/"+dateStr+'/'+rej.RequestId+".jpg";
-document.getElementsByClassName('pti')[0].innerHTML = rej.FileMD5;
-document.getElementsByClassName('pti')[1].innerHTML = rej.RequestId;
-document.getElementsByClassName('pti')[2].innerHTML = '<a href="'+resimageURL+'" target="_blank">'+resimageURL+"</a>";
+    resimageURL=`https://bspcms-1256309736.cos.ap-guangzhou.myqcloud.com/ImageModeration/1257609559/${dateStr}/${rej.RequestId}.jpg`;
+      document.getElementsByClassName('pti')[0].innerHTML = rej.FileMD5;
+      document.getElementsByClassName('pti')[1].innerHTML = rej.RequestId;
+      document.getElementsByClassName('pti')[2].innerHTML = '<a href="'+resimageURL+'" target="_blank">'+resimageURL+"</a>";
 
 
 var template = [

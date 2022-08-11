@@ -6,18 +6,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ArAI-图像美化-美颜</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.js" rel="stylesheet">
-
+    <script src="https://www.arsrna.cn/js/json2html.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+    <script src="https://www.arsrna.cn/js/arauth.js"></script>
+    <script src="../login.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/json2html/2.1.0/json2html.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.3.0/layer.js"></script>
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/gh/ArSrNa/ArUI-Progress/arloading.css" rel="stylesheet">
     <link href="index.css" rel="stylesheet">
+    <link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
 </head>
 
 <body style="padding-top: 70px">
+    <nav class="navbar navbar-expand-lg navbar-light nav-blur fixed-top" style="min-height: 60px;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Ar-Sr-Na AI技能中心</a>
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainNavContent">
+      
+            </ul>
+            <div class="d-flex lead">
+              <div id="user" class="me-2">请登录</div>
+              <button class="btn btn-primary" onclick="
+              localStorage.setItem('codeVerifier',ArCIAM.generateCV())
+              ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));
+              " id="loginButton">
+                <i class="fa-solid fa-user"></i>
+              </button>
+              <button class="btn btn-danger" onload="$(this).hide()" onclick="
+              ArCIAM.logout();
+              localStorage.removeItem('CIAM')
+              " id="logoutButton">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+              </button>
+              </div> 
+          </div>
+          
+        </div>
+      </nav>
+      <script src="../header.js"></script>
     <script src="../header.js"></script>
 
     <nav aria-label="breadcrumb">
@@ -28,16 +62,16 @@
         </ol>
     </nav>
 
-    <section>
         <div class="container">
             <script src="index.js"></script>
             <div class="card">
                 <div class="card-header">输入明细</div>
+                <div class="card-body">
                 <div class="input-group mb-3">
                     <label for="imgfile" class="form-label">请保证内容在5M以内，分辨率大于256*256，本站API不会存储人脸信息！</label>
                     <div class="input-group">
-                        <input class="form-control" type="file" class="custom-file-input" id="imgfile">
-                        <button class="btn btn-primary" onclick="ToBase64();">提交</button>
+                        <input class="form-control" type="file" class="custom-file-input" id="imgfile" disabled>
+                        <button class="btn btn-primary" id="submitBtn" onclick="ToBase64();" disabled>提交</button>
                       </div>
                 </div>
                 <div id="doing" class="container bg" style="background: #EEEEEE;font-family: '思源黑体 CN Light';display: none">
@@ -52,20 +86,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="jumbotron bg-light">
 
                     <h1 class="display-4">美颜配置</h1>
                     <div class="lead">
 
                         <div class="row">
             <span>磨皮程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" />
+            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
             <span> 美白程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" />
+            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
             <span>瘦脸程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" />
+            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
             <span>大眼程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" />
+            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
                         </div>
                     </div>
 
@@ -73,17 +106,17 @@
 
             </div>
             <hr />
-        </div>
-        <div class="result card container">
+
+        <div class="result card">
             <div class="card-header">输出明细</div>
-            <div class="row">
+            <div class="row card-body">
                 <div class="col-lg-6">
-                    <h1 class="display-4">原图</h1>
+                    <h1 class="lead">原图</h1>
                     <img class="img-fluid" alt="请提交图片" id="imageOri" src="https://res.arsrna.cn/images/pid-19050643%E3%81%BF%E3%81%93%E3%81%8F%E3%82%8D%E3%81%95%E3%82%932%20%E4%BB%95%E4%B8%8A%E3%81%92%20%E5%A1%97%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F.png" />
                     <p id="fileName" class="lead">pid-19050643みこくろさん2 仕上げ 塗ってみた.png</p>
                 </div>
                 <div class="col-lg-6">
-                    <h1 class="display-4">输出图片</h1> <img class="img-fluid resimg" alt="请提交图片" id="imageEff" src="https://res.arsrna.cn/images/pid-19050643%E3%81%BF%E3%81%93%E3%81%8F%E3%82%8D%E3%81%95%E3%82%932%20%E4%BB%95%E4%B8%8A%E3%81%92%20%E5%A1%97%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F.png"
+                    <h1 class="lead">输出图片</h1> <img class="img-fluid resimg" alt="请提交图片" id="imageEff" src="https://res.arsrna.cn/images/pid-19050643%E3%81%BF%E3%81%93%E3%81%8F%E3%82%8D%E3%81%95%E3%82%932%20%E4%BB%95%E4%B8%8A%E3%81%92%20%E5%A1%97%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F.png"
                     />
                     <div class="media-object-default">
                         <div class="media-body">
@@ -100,30 +133,16 @@
         </div>
         </div>
         </div>
+    </div>
 
 
-    </section>
-
-
-
-
-    <section>
-        <div class="jumbotron">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="display-4">ArAI技能中心图像美化-美颜</h1>
-                        <h1 class="display-4">Release 4.0</h1>
-                        <p class="lead">通过Serverless与PHP接入腾讯云SDK与前端对接，实现语音，图像等人工智能技术<br>
-                        </p>
-                        <p><a class="btn btn-primary btn-lg" href="https://ai.qq.com/" role="button">腾讯AI中心</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <script src="https://www.arsrna.cn/footer.js"></script>
 </body>
 
 </html>
+<script>
+    $(document).ready(()=>{
+        getUser('#imgfile,#submitBtn,.beautyRange')
+    })
+</script>

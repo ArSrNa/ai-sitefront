@@ -38,6 +38,7 @@ function display(head, data) {
 
 function generate(b64data, Smoothing, Whitening, FaceLifting, EyeEnlarging) {
     $.ajax({
+        headers:{token:tokenAll.access_token},
         type: "POST",
         url: "https://api.arsrna.cn/release/araibface",
         data: '{"Base64FileContent":"' + b64data + '","Smoothing":' + Smoothing + ',"Whitening":' + Whitening + ',"FaceLifting":' + FaceLifting + ',"EyeEnlarging":' + EyeEnlarging + '}',
