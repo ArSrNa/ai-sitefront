@@ -73,6 +73,8 @@
                         <input class="form-control" type="file" class="custom-file-input" id="imgfile" disabled>
                         <button class="btn btn-primary" id="submitBtn" onclick="ToBase64();" disabled>提交</button>
                       </div>
+                      <div class="alert alert-primary" id="alertLogin">请先登录后再使用，点击右上角登录，若无账号请注册</div>
+
                 </div>
                 <div id="doing" class="container bg" style="background: #EEEEEE;font-family: '思源黑体 CN Light';display: none">
                     <div class="row">
@@ -143,6 +145,6 @@
 </html>
 <script>
     $(document).ready(()=>{
-        getUser('#imgfile,#submitBtn,.beautyRange')
+        getUser('#imgfile,#submitBtn,.beautyRange','#alertLogin')
     })
 </script>

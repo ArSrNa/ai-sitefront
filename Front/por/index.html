@@ -72,7 +72,8 @@
   <input class="form-control" type="file" class="custom-file-input" id="imgfile" accept="image/*" disabled>
   <button class="btn btn-primary" id="btnSubmit" onclick="ToBase64();" disabled>提交</button>
 </div>
-
+  <div class="alert alert-primary" id="alertLogin">请先登录后再使用，点击右上角登录，若无账号请注册</div>
+  
 <script src="index.js"></script>
 
 <div class="card">
@@ -154,6 +155,6 @@
 </html>
 <script>
   $(document).ready(()=>{
-    getUser('#btnSubmit,#imgfile')
+    getUser('#btnSubmit,#imgfile','#alertLogin')
   })
 </script>

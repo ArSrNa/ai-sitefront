@@ -1,4 +1,4 @@
-function getUser(contents){
+function getUser(contents,hideContent){
     if(!(GetQueryValue('code')==null)){
      ArCIAM.getToken(GetQueryValue('code'),localStorage.getItem('codeVerifier'),
       function(msg){
@@ -26,6 +26,7 @@ function getUser(contents){
         $('#logoutButton').show()
         $('#user').html(userInfo.nickname);
         $(contents).removeAttr('disabled');
+        $(hideContent).hide()
     }
 }
 
