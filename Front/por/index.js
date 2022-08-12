@@ -5,8 +5,8 @@ function ToBase64() {
         }
         else {
             document.getElementById('doing').style.display = '';
-            document.getElementById('reshead').innerHTML="计算中";
-document.getElementById('resnr').innerHTML="计算中";
+            $('#reshead').html("计算中");
+            $('#resnr').html("计算中");
     /*转换base64*/
     var imgFile = new FileReader();
     imgFile.readAsDataURL(img.files[0]);
@@ -15,10 +15,6 @@ document.getElementById('resnr').innerHTML="计算中";
         var imgData = this.result; //base64数据  
         var b64head = imgData.substring(0,imgData.indexOf(','));
         var b64data = imgData.substring(imgData.indexOf(',')+1);
-
-//console.log(imgData);
-//console.log(b64head + imgData);
-//dashStart(imgData);
         display(b64head,b64data);
         generate(b64data);
         //console.log(b64data)
@@ -33,13 +29,14 @@ function display(head,data) {
 
 
 function generate(b64data) {
+  $('#progressMSG').html(`ArAI 提交中`)
  $.ajax({
     headers:{token:tokenAll.access_token},
-    type: "POST",
-    url: "https://api.arsrna.cn/release/araiphp",
-    data: JSON.stringify({"FileContent": b64data}),
+    type:'POST',
+    url: "https://api.arsrna.cn/release/ArAI_IMS",
+    data: JSON.stringify({FileContent: b64data}),
     dataType:'json',
-   success: function(msg){
+    success: function(msg){
     console.log(msg);
 
 if(("errorCode" in msg)) {
@@ -54,6 +51,7 @@ result.generate(msg);
     },
 
   error: function(err){
+    $('#progressMSG').html(`错误 ${err.status} ${err.responseText}`)
 console.log(err.responseJSON);
 //alert('提交失败：' + err.status + err.statusText);
 }
@@ -110,7 +108,7 @@ var result = {
   }
   return i;
  }
-    resimageURL=`https://bspcms-1256309736.cos.ap-guangzhou.myqcloud.com/ImageModeration/1257609559/${dateStr}/${rej.RequestId}.jpg`;
+    resimageURL=`https://bspcms-1256309736.cos.ap-guangzhou.myqcloud.com/ImageDetail/${dateStr}/0/1257609559/${rej.RequestId}.jpg`;
       document.getElementsByClassName('pti')[0].innerHTML = rej.FileMD5;
       document.getElementsByClassName('pti')[1].innerHTML = rej.RequestId;
       document.getElementsByClassName('pti')[2].innerHTML = '<a href="'+resimageURL+'" target="_blank">'+resimageURL+"</a>";

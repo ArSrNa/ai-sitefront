@@ -69,10 +69,30 @@
     <div class="card-body">
       <label for="imgfile" class="form-label">请保证内容在5M以内，分辨率大于256*256，请勿上传隐私照片！</label>
 <div class="input-group mb-3">
-  <input class="form-control" type="file" class="custom-file-input" id="imgfile" accept="image/*" disabled>
+  <input class="form-control" type="file" class="custom-file-input" id="imgfile" 
+  onchange="
+  if(this.files[0].size/Math.pow(1024,2)>5){
+    alert('文件过大，请重新选择')
+    $('#btnSubmit').attr('disabled','')
+    this.value=''
+  }else{
+    $('#btnSubmit').removeAttr('disabled')
+  }
+  if(this.files.length==0){
+    $('#btnSubmit').attr('disabled','')
+  }else{
+    $('#btnSubmit').removeAttr('disabled')
+  }
+  " accept="image/*" disabled>
+
   <button class="btn btn-primary" id="btnSubmit" onclick="ToBase64();" disabled>提交</button>
 </div>
-  <div class="alert alert-primary" id="alertLogin">请先登录后再使用，点击右上角登录，若无账号请注册</div>
+  <div class="alert alert-primary" id="alertLogin">请先登录后再使用
+    <button class="btn btn-primary" onclick="
+    localStorage.setItem('codeVerifier',ArCIAM.generateCV())
+    ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));">
+      <i class="fa-solid fa-user"></i> 点此登录或注册
+    </button></div>
   
 <script src="index.js"></script>
 
@@ -82,31 +102,41 @@
 		<div class="row">
 	<div class="col-1">
 		<i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></div>
-		<div class="col-11"><h5>Ar-Sr-Na AI 提交中</h5>
+		<div class="col-11"><h5 id="progressMSG">Ar-Sr-Na AI 提交中</h5>
 			<div class="ar-line">
 	  <div class="arloading"></div></div></div></div></div>
     
   <div class="card-header lead">输出明细</div>
-  
+  <div class="card-body">
+  <div class="card mb-3">
   <div class="card-header">场景识别</div>
-    <div class="container bg-light resDetail">
-        <div id="singleResult"></div>
+    <div class="container bg-light resDetail card-body">
+        <div id="singleResult">
+          <div class="lead">请先提交</div>
+        </div>
      </div>
+    </div>
 
+<div class="card mb-3">
     <div class="card-header">对象识别</div> 
-    <div class="container bg-light resDetail">
+    <div class="container bg-light resDetail card-body">
       <div id="objectResult">
+        <div class="lead">请先提交</div>
       </div>
+    </div>
     </div>
     
+    <div class="card mb-3">
     <div class="card-header">内容识别</div> 
-    <div class="container bg-light resDetail">
+    <div class="container bg-light resDetail card-body">
       <div id="libResult">
+        <div class="lead">请先提交</div>
       </div>
     </div>
-
     </div>
     </div>
+  </div>
+</div>
   </div>
           </div>
           
@@ -155,6 +185,6 @@
 </html>
 <script>
   $(document).ready(()=>{
-    getUser('#btnSubmit,#imgfile','#alertLogin')
+    getUser('#imgfile','#alertLogin')
   })
 </script>
