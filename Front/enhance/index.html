@@ -16,6 +16,7 @@
 <script src="https://www.arsrna.cn/js/arauth.js"></script>
 <link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="../login.js"></script>
 <script src="index.js"></script>
 <link href="index.css" rel="stylesheet">
@@ -44,7 +45,7 @@
         </button>
         <button class="btn btn-danger" onload="$(this).hide()" onclick="
         ArCIAM.logout();
-        localStorage.removeItem('CIAM')
+        $.removeCookie('CIAM',{path:'/'})
         " id="logoutButton">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
         </button>
@@ -109,8 +110,7 @@
           
            
               <div class="row align-items-center" id="logProgress">
-                <p id="logs" class="col">正在处理</p>
-                <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>
+                
               </div>
            
           </div>
@@ -136,6 +136,25 @@
   
 </div>
 </div> 
+
+<div class="row mb-3">
+  <div class="col-md-6">
+  <div class="card">
+    <div class="card-header">过程1-COS缩放锐化放大 50%-1000x-400%</div>
+    <div class="card-body text-center">
+      <img id="cosStep1" class="arimg img-fluid" src="" alt="待上传">
+    </div></div>
+  </div>
+
+<div class="col-md-6">
+<div class="card">
+  <div class="card-header">过程2-TIIA放大</div>
+  <div class="card-body text-center">
+  <img id="TIIA" class="arimg img-fluid" src="" alt="待处理">
+</div></div>
+</div>
+
+</div>
 
 <div class="card">
   <div class="card-header">处理原理</div>

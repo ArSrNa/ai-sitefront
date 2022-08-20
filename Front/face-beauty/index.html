@@ -42,7 +42,7 @@
               </button>
               <button class="btn btn-danger" onload="$(this).hide()" onclick="
               ArCIAM.logout();
-              localStorage.removeItem('CIAM')
+              $.removeCookie('CIAM',{path:'/'})
               " id="logoutButton">
                 <i class="fa-solid fa-arrow-right-to-bracket"></i>
               </button>

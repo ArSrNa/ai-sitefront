@@ -2,20 +2,21 @@ function getUser(contents,hideContent){
     if(!(GetQueryValue('code')==null)){
      ArCIAM.getToken(GetQueryValue('code'),localStorage.getItem('codeVerifier'),
       function(msg){
-         localStorage.setItem('CIAM',msg.responseText);
+        $.cookie('CIAM',msg.responseText,{expire:7,path:'/'})
          console.log(msg);
          location.href = funcUrlDel('code').replace('?','')
      });
     }
-    tokenAll = JSON.parse(localStorage.getItem('CIAM'));
-    if(tokenAll==null){
+    
+    if($.cookie('CIAM')==null){
         console.log('未登录')
         $('#loginButton').show();
         $('#logoutButton').hide();
     }else{
-        if(!(JSON.parse(localStorage.getItem('CIAM')).error==null)){
-            localStorage.removeItem('CIAM');
+        if(!(JSON.parse($.cookie('CIAM')).error==null)){
+            $.removeCookie('CIAM',{path:'/'})
         }
+        tokenAll = JSON.parse($.cookie('CIAM'));
         //已登录回调
         refreshToken()
         idToken = tokenAll.id_token;
@@ -35,10 +36,10 @@ function refreshToken(){
     function(msg){
         console.log(JSON.parse(msg.responseText));
         if(JSON.parse(msg.responseText).error==null){
-            localStorage.setItem('CIAM',msg.responseText)
+            $.cookie('CIAM',msg.responseText,{expire:7,path:'/'})
             console.log('设置新的token'+msg.responseText)
         }else{
-           // localStorage.removeItem('CIAM');
+           //  $.removeCookie('CIAM'.{path:'/'})
         }
     }).responseText)
      // return(JSON.parse(localStorage.getItem('CIAM')))
