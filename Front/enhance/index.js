@@ -1,62 +1,3 @@
-// 存储桶名称，由bucketname-appid 组成，appid必须填入，可以在COS控制台查看存储桶名称。 https://console.cloud.tencent.com/cos5/bucket
-var Bucket = 'temporary-1257609559';  /* 存储桶，必须字段 */
-// 存储桶region可以在COS控制台指定存储桶的概览页查看 https://console.cloud.tencent.com/cos5/bucket/ 
-// 关于地域的详情见 https://cloud.tencent.com/document/product/436/6224
-var Region = 'ap-guangzhou';     /* 存储桶所在地域，必须字段 */
-// 初始化实例
-var cos = new COS({
-    // getAuthorization 必选参数
-    getAuthorization: function (options, callback) {
-      $.ajax({
-        headers:{token:tokenAll.access_token},
-        url:'https://api.arsrna.cn/release/coskey_write',
-        data:{
-          bucket:'temporary',
-          APPID:1257609559,
-          region:'ap-guangzhou'
-        },
-        type:'POST',
-        dataType:'json',
-        async:false,
-        success(data) {
-          console.log(data)
-           var credentials = data && data.credentials;
-           if (!data || !credentials) return console.error('credentials invalid');
-           callback({
-               TmpSecretId: data.credentials.tmpSecretId,
-               TmpSecretKey: data.credentials.tmpSecretKey,
-               SecurityToken: data.credentials.sessionToken,
-               StartTime: data.startTime,
-               ExpiredTime: data.expiredTime,
-           });
-       }
-   });
-    }
-});
-
-function COSDownload(key,query,callback){
-  cos.getObjectUrl({
-    Bucket: 'temporary-1257609559', /* 填入您自己的存储桶，必须字段 */
-    Region: 'ap-guangzhou',  /* 存储桶所在地域，例如ap-beijing，必须字段 */
-    Key: key,  /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */
-    Sign: true,
-    /* 传入的请求参数需与实际请求相同，能够防止用户篡改此HTTP请求的参数 */
-    Query: query,
-   // {
-   //   'imageMogr2/thumbnail/200x/': '' 
-   // },
-}, function (err, data) {
-    console.log(err || data.Url);
-    if(err) alert(err)
-    try{
-      callback(data.Url)
-    }catch(err){
-      console.err(`回调错误: ${err}`)
-    }
-    return(data.Url)
-});
-}
-
 $('#logs').hide()
 function generate(file) {
   var fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
@@ -80,42 +21,65 @@ function generate(file) {
     if(err){
       alert(`错误：${err}`)
     }
-    $('#logProgress').html('')
     COSDownload(`/${fileRandomKey}`,'',(msg)=>{
-      $('#origin').attr('src',msg)
+      $('#origin').attr('src',msg);
+      tiiaAnalysis('AssessQuality',msg,(msg)=>{
+        console.log(msg.responseJSON)
+        var data=msg.responseJSON;
+        var temp=`<div class="lead">清晰度${data.ClarityScore}%</div><div class="progress"><div class="progress-bar"style="width: ${data.ClarityScore}%">${data.ClarityScore}%</div></div><div class="lead">美观度${data.AestheticScore}</div><div class="progress"><div class="progress-bar"style="width: ${data.AestheticScore}%">${data.AestheticScore}%</div></div><hr><table class="table"><thead><tr><th scope="col">项目</th><th scope="col">详情</th></tr></thead><tbody class="table-group-divider"><tr><th>长图</th><td>${data.LongImage}</td></tr><tr><th>黑白图</th><td>${data.BlackAndWhite}</td></tr><tr><th>小图</th><td>${data.SmallImage}</td></tr><tr><th>大图</th><td>${data.BigImage}</td></tr><tr><th>纯色图</th><td>${data.PureImage}</td></tr><tr><th>RequestId</th><td>${data.RequestId}</td></tr></tbody></table>`;
+       $('#imgAnalysis').html(temp)
+      })
     });
     
     COSDownload(`/${fileRandomKey}`,{'imageMogr2/thumbnail/!200p/sharpen/1000':''},(msg)=>{
-      $('#cosStep1').attr('src',msg)
+        tiiaAnalysis('EnhanceImage',msg,(msg)=>{
+          if(msg.status==200){
+            var body = dataURLtoBlob(`data:image/png;base64,${msg.responseJSON.EnhancedImage}`);
+            cos.putObject({
+                Bucket: Bucket, /* 填入您自己的存储桶，必须字段 */
+                Region: Region,  /* 存储桶所在地域，例如ap-beijing，必须字段 */
+                Key: `enhanced_${fileRandomKey}`,  /* 存储在桶里的对象键（例如1.jpg，a/b/test.txt），必须字段 */
+                Body: body,
+            }, function(err, data) {
+                console.log(err || data);
+                COSDownload(`/enhanced_${fileRandomKey}`,'',(msg)=>{
+                  $('#process').attr('src',msg)
+                  $('#AfterDownload').removeAttr('disabled')
+                  $('#AfterDownload').attr('href',msg+`&response-content-disposition=attachment`)
+                  $('#logProgress').html('')
+                })
+            });
+          //console.log(msg)
+          
+      }else{
+        layer.open({
+          title:'处理失败',
+          content:msg
+        })
+      }
+    })
+    
     });
+
+
 });
 
-//  $.ajax({
-//     headers:{token:tokenAll.access_token},
-//     type:'POST',
-//     url: "https://api.arsrna.cn/release/ArAI_IMS",
-//     data: JSON.stringify({FileContent: b64data}),
-//     dataType:'json',
-//     success: function(msg){
-//     console.log(msg);
+function tiiaAnalysis(path,imageURL,callback){
+   var ajaxbase = $.ajax({
+    headers:{token:tokenAll.access_token},
+    url: "https://api.arsrna.cn/release/tiia/"+path,
+    data: {imageUrl:imageURL},
+    async:false,
+    dataType:'json',
+});
+$('#logProgress').html(`<p id="logs" class="col lead">
+        ArAI TIIA处理中</p>
+        <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
 
-// if(("errorCode" in msg)) {
-// 	alert("发生错误："+msg);
-// 	window.location.reload()
-// }
-// else {
-// document.getElementById("doing").style.display="none";
-// result.generate(msg);
-// }
+      try{callback(ajaxbase)}
+      catch(err){console.warn('TIIA回调错误 '+err)}
+}
 
-//     },
 
-//   error: function(err){
-//     $('#logs').html(`错误 ${err.status} ${err.responseText}`)
-// console.log(err.responseJSON);
-// //alert('提交失败：' + err.status + err.statusText);
-// }
-
-// });
 
 }

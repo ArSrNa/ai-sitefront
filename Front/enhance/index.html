@@ -18,6 +18,7 @@
 <script src="https://cdn.jsdelivr.net/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="../login.js"></script>
+<script src="../js/cos.js"></script>
 <script src="index.js"></script>
 <link href="index.css" rel="stylesheet">
     </head>
@@ -69,7 +70,14 @@
       <div class="card">
         <div class="card-header">文件输入配置</div>
         <div class="card-body">
-          <div class="alert alert-primary">输入图片分辨率必须超过256*256，大小请勿超过4M</div>
+          <div class="alert alert-primary">
+            图片格式：PNG、JPG、JPEG。 
+          </div>
+          <div class="alert alert-primary">
+            • 图片大小：所下载图片经Base64编码后不超过4M。图片下载时间不超过3秒。<br> 
+            • 图片像素：大于50*50像素，最大不超过250万像素，否则影响识别效果； <br>
+            • 长宽比：长边：短边＜5
+          </div>
               <input type="file" class="form-control" id="inputFile" oninput="
               if(this.files[0].size/Math.pow(1024,2)>4){
                    alert('文件过大，请重新选择')
@@ -90,8 +98,9 @@
               <div class="input-group">
               <label class="input-group-text" for="model">选择效果</label>
               <select class="form-select" id="model">
-                <option value="1">锐化+降噪</option>
-                <option value="2" selected>先缩放后锐化+降噪</option>
+                <option value="1" disabled>通用类-高级放大（内测，收费）</option>
+                <option value="2" selected>基础：缩放锐化降噪</option>
+                <option value="3" disabled>通用类-ESRGAN放大（内测，收费）</option>
               </select>
               </div>
               <div class="alert alert-primary" id="alertLogin">请先登录后再使用
@@ -117,8 +126,18 @@
         </div>
         </div>
       
-<div class="col-lg-6 card-group">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header">图像分析</div>
+            <div class="card-body" id="imgAnalysis">
+              
 
+            </div>
+          </div>          
+        </div>
+</div> 
+
+<div class="card-group mb-3">
   <div class="card">
     <div class="card-header" id="resolutionBefore">处理前</div>
     <div class="card-body text-center">
@@ -129,32 +148,14 @@
   <div class="card">
     <div class="card-header" id="resolutionAfter">处理后</div>
     <div class="card-body text-center">
-    <img id="process" class="arimg img-fluid" src="images/after.jpg" alt="待处理">
+    <img id="process" class="arimg img-fluid mb-3" src="images/after.jpg" alt="待处理">
+    <a class="btn btn-primary" href="" target="_blank" id="AfterDownload" disabled>下载</a>
   </div>
 </div>
-
-  
-</div>
-</div> 
-
-<div class="row mb-3">
-  <div class="col-md-6">
-  <div class="card">
-    <div class="card-header">过程1-COS缩放锐化放大 50%-1000x-400%</div>
-    <div class="card-body text-center">
-      <img id="cosStep1" class="arimg img-fluid" src="" alt="待上传">
-    </div></div>
-  </div>
-
-<div class="col-md-6">
-<div class="card">
-  <div class="card-header">过程2-TIIA放大</div>
-  <div class="card-body text-center">
-  <img id="TIIA" class="arimg img-fluid" src="" alt="待处理">
-</div></div>
 </div>
 
-</div>
+
+
 
 <div class="card">
   <div class="card-header">处理原理</div>
