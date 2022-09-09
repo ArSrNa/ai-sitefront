@@ -8,16 +8,17 @@
     <title>Ar-Sr-Na AI技能中心</title>
     <!-- Bootstrap -->
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.3.0/layer.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.0/css/all.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.3.0/layer.js"></script>
 <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.3/css/all.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/gh/ArSrNa/ArUI-Progress/arloading.css" rel="stylesheet">
 <script src="https://www.arsrna.cn/js/arauth.js"></script>
 <link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
 <script src="header.js"></script>
-
+<script src="login.js"></script>
 </head>
 
 
@@ -56,7 +57,7 @@
 
         <div class="card bg-dark text-white">
             <img class="card-bg-img" src="https://res.arsrna.cn/DSC08095_cop.jpg" alt="Card image">
-            <div class="card-img-overlay" style="margin: 10%;">
+            <div class="card-img-overlay" style="margin: 5%;overflow: hidden;">
               <h5 class="display-1 headH1">Ar-Sr-Na AI技能中心</h5>
               <p class="lead">通过接入腾讯云SDK与前端联系，实现语音，图像等人工智能技术</p>
               <p><a class="btn btn-primary btn-lg" href="https://ai.qq.com/" role="button">腾讯AI中心</a></p>
@@ -68,8 +69,8 @@
 <div class="container mb-3">
         <div class="card mb-3">
             <div class="card-body">
-              <h5 class="display-5">图像识别-鉴黄</h5>
-              <h6 class="card-subtitle mb-2 text-muted">通过base64图像Ajax请求腾讯云sdk，返回结果至前端，整个过程您的图片仍然在本地进行计算，不会上传到任何云端进行存储，除了检测过程会用到图片，但当浏览结束后将会被销毁</h6>
+              <h5 class="display-5"><i class="fa-duotone fa-bullseye-pointer fa-fw"></i>图像识别-鉴黄</h5>
+              <h6 class="card-subtitle mb-2 text-muted">通过AI识别图像是否违规，可使用审核结果判断合规性</h6>
               <a href="por/" target="_blank" class="btn btn-primary">点击进入</a>
             </div>
     </div>
@@ -77,9 +78,9 @@
 
     <div class="card mb-3">
         <div class="card-body">
-          <h5 class="display-5">图像标签</h5>
+          <h5 class="display-5"><i class="fa-regular fa-tag fa-fw"></i>图像标签</h5>
           <h6 class="card-subtitle mb-2 text-muted">对图片分类，找到适合图片的标签进行分类</h6>
-          <a href="imglabel/" target="_blank" class="btn btn-primary">点击进入</a>
+          <a href="imglabel/" target="_blank" class="btn btn-primary disabled">敬请期待</a>
         </div>
 </div>
 
@@ -91,7 +92,7 @@
 <div class="container">
     <div class="card mb-3">
         <div class="card-body">
-          <h5 class="display-5">图像美化-美颜</h5>
+          <h5 class="display-5"><i class="fa-regular fa-face-smile fa-fw"></i>图像美化-美颜</h5>
           <h6 class="card-subtitle mb-2 text-muted">懒得动手的可以试下</h6>
           <a href="face-beauty/" target="_blank" class="btn btn-primary">点击进入</a>
         </div>
@@ -99,7 +100,7 @@
 
 <div class="card mb-3">
   <div class="card-body">
-    <h5 class="display-5">图像增强</h5>
+    <h5 class="display-5"><i class="fa-solid fa-panorama fa-fw"></i>图像增强</h5>
     <h6 class="card-subtitle mb-2 text-muted">将分辨率低，线条模糊的图片进行增强</h6>
     <a href="enhance/" target="_blank" class="btn btn-primary">点击进入</a>
   </div>
@@ -117,6 +118,9 @@
     </div>
     <hr />
     <script src="https://www.arsrna.cn/footer.js"></script>
+    <script>
+      getUser('','')
+    </script>
 </body>
 
 </html>

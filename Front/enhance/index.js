@@ -31,7 +31,7 @@ function generate(file) {
       })
     });
     
-    COSDownload(`/${fileRandomKey}`,{'imageMogr2/thumbnail/!200p/sharpen/1000':''},(msg)=>{
+    COSDownload(`/${fileRandomKey}`,{'imageMogr2/sharpen/1000':''},(msg)=>{
         tiiaAnalysis('EnhanceImage',msg,(msg)=>{
           if(msg.status==200){
             var body = dataURLtoBlob(`data:image/png;base64,${msg.responseJSON.EnhancedImage}`);
@@ -52,10 +52,7 @@ function generate(file) {
           //console.log(msg)
           
       }else{
-        layer.open({
-          title:'处理失败',
-          content:msg
-        })
+        alert(`处理失败 ${msg}`)
       }
     })
     
