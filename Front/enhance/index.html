@@ -73,15 +73,13 @@
         <div class="card-header">文件输入配置</div>
         <div class="card-body">
           <div class="alert alert-primary">
-            图片格式：PNG、JPG、JPEG。 
+            • 图片大小：所下载图片经Base64编码后不超过5M。
           </div>
           <div class="alert alert-primary">
-            • 图片大小：所下载图片经Base64编码后不超过4M。图片下载时间不超过3秒。<br> 
-            • 图片像素：大于50*50像素，最大不超过250万像素，否则影响识别效果； <br>
-            • 长宽比：长边：短边＜5
+            您的文件将按照本站隐私协议处理，将在有效期1天后自动删除
           </div>
-              <input type="file" class="form-control" id="inputFile" oninput="
-              if(this.files[0].size/Math.pow(1024,2)>4){
+              <input type="file" disabled class="form-control" id="inputFile" oninput="
+              if(this.files[0].size/Math.pow(1024,2)>5){
                    alert('文件过大，请重新选择')
                    $('#btnSubmit').attr('disabled','')
                    this.value=''
@@ -99,12 +97,26 @@
 
               <div class="input-group">
               <label class="input-group-text" for="model">选择效果</label>
-              <select class="form-select" id="model">
-                <option value="1" disabled>通用类-高级放大（内测，收费）</option>
-                <option value="2" selected>基础：锐化降噪</option>
+              <select class="form-select" id="model" oninput="changeOptions(this.value)">
+                <option value="1">通用类-超分辨率</option>
+                <option value="2" selected>基础-图像增强</option>
                 <option value="3" disabled>通用类-ESRGAN放大（内测，收费）</option>
               </select>
               </div>
+              <div class="row">
+                <div class="col">
+                <label id="denoiseLabel" class="form-label">降噪能力：3</label>
+                <input type="range" min="0" max="5" value="3" oninput="$('#denoiseLabel').html(`降噪能力：${this.value}`)"
+                class="form-range optRange" id="denoise">
+              </div>
+              <div class="col">
+                <label id="sharpLabel" class="form-label">锐化能力：3</label>
+                <input type="range" min="0" max="5" value="3" oninput="$('#sharpLabel').html(`锐化能力：${this.value}`)"
+                class="form-range optRange" id="sharp">
+              </div>
+              </div>
+              
+              
               <div class="alert alert-primary" id="alertLogin">请先登录后再使用
                 <button class="btn btn-primary" onclick="
                 localStorage.setItem('codeVerifier',ArCIAM.generateCV())
@@ -115,7 +127,7 @@
               <hr>
 
             <div class="d-grid gap-2">
-              <button class="btn btn-success" onclick="generate(document.getElementById('inputFile'))" id="btnSubmit" disabled>处理</button>
+              <button class="btn btn-success" onclick="upload(document.getElementById('inputFile'),generate[$('#model').val()])" id="btnSubmit" disabled>处理</button>
               </div>
             
           
@@ -207,12 +219,12 @@
 </div>
 
       
-<script src="https://www.arsrna.cn/footer.js"></script>
+<!-- <script src="https://www.arsrna.cn/footer.js"></script> -->
 </body>
 </html>
 <script>
   $(document).ready(()=>{
-    getUser('#imgfile','#alertLogin')
+    getUser('#inputFile','#alertLogin')
     startChangeBg()
   })
 </script>
