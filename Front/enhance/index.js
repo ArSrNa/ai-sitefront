@@ -1,8 +1,14 @@
-$('#logs').hide();
+$('#logProgress').hide()
 
-function upload(file,callback){
+
+function upload(file,mode,callback){
+  var args=[
+    `ci-process=AISuperResolution`,
+    `ci-process=AIEnhanceImage&denoise=${$('#denoise').val()}&sharpen=${$('#sharp').val()}`
+  ]
+  console.log(args[mode])
   fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
-  $('#logs').show()
+  $('#logProgress').show()
   $('#logs').html(`ArAI 文件上传中`);
   cos.putObject({
     Bucket: Bucket, /* 必须 */
@@ -10,10 +16,20 @@ function upload(file,callback){
     Key: fileRandomKey,              /* 必须 */
     StorageClass: 'STANDARD',
     Body: file.files[0], // 上传文件对象
+  //   Headers:{
+  //     'Pic-Operations':
+  //     JSON.stringify({
+  //       "is_pic_info": 1,
+  //       "rules": [{
+  //           "fileid": `opt_${mode}_${fileRandomKey}`,
+  //           "rule": args[mode]
+  //       }] 
+  //     })
+  // },
     onProgress: function(progressData) {
         console.log(JSON.stringify(progressData));
         $('#logProgress').html(`<p id="logs" class="col lead">
-        ArAI 提交中  ${((progressData.speed/(1024*1024)).toFixed(2))} MB/s
+        ArAI 提交中  ${((progressData.speed/1024).toFixed(2))} MB/s
         </p>
         <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
     }
@@ -43,12 +59,8 @@ function upload(file,callback){
 }
 
 var generate={
-  2:function() {
-    COSDownload(`/${fileRandomKey}`,{
-      'ci-process=AIEnhanceImage':'',
-      denoise:$('#denoise').val(),
-      sharpen:$('#sharp').val()
-    },
+  1:function() {
+    COSDownload(`/${fileRandomKey}`,{'ci-process':'AISuperResolution'},
     function(msg){
       $('#process').attr('src',msg);
       $('#logProgress').hide()
@@ -56,9 +68,11 @@ var generate={
     })
   },
 
-  1:function() {
+  0:function() {
     COSDownload(`/${fileRandomKey}`,{
-      'ci-process':'AISuperResolution',
+      'ci-process=AIEnhanceImage':'',
+      denoise:$('#denoise').val(),
+      sharpen:$('#sharp').val()
     },
     function(msg){
       $('#process').attr('src',msg);
@@ -116,10 +130,10 @@ function startChangeBg() {
 
 function changeOptions(val){
   switch(val){
-    case '1'||'3':
+    case '0'||'2':
       $('.optRange').attr('disabled','')
     break;
-    case '2':
+    case '1':
       $('.optRange').removeAttr('disabled')
     break
   }

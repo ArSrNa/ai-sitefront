@@ -98,9 +98,9 @@
               <div class="input-group">
               <label class="input-group-text" for="model">选择效果</label>
               <select class="form-select" id="model" oninput="changeOptions(this.value)">
-                <option value="1">通用类-超分辨率</option>
-                <option value="2" selected>基础-图像增强</option>
-                <option value="3" disabled>通用类-ESRGAN放大（内测，收费）</option>
+                <option value="0">通用类-超分辨率</option>
+                <option value="1" selected>基础-图像增强</option>
+                <option value="2" disabled>通用类-ESRGAN放大（内测，收费）</option>
               </select>
               </div>
               <div class="row">
@@ -127,7 +127,10 @@
               <hr>
 
             <div class="d-grid gap-2">
-              <button class="btn btn-success" onclick="upload(document.getElementById('inputFile'),generate[$('#model').val()])" id="btnSubmit" disabled>处理</button>
+              <button class="btn btn-success" onclick="
+                upload(document.getElementById('inputFile'),
+                $('#model').val(),
+                generate[$('#model').val()])" id="btnSubmit" disabled>处理</button>
               </div>
             
           
