@@ -59,7 +59,7 @@ function upload(file,mode,callback){
 }
 
 var generate={
-  1:function() {
+  0:function() {
     COSDownload(`/${fileRandomKey}`,{'ci-process':'AISuperResolution'},
     function(msg){
       $('#process').attr('src',msg);
@@ -68,7 +68,7 @@ var generate={
     })
   },
 
-  0:function() {
+  1:function() {
     COSDownload(`/${fileRandomKey}`,{
       'ci-process=AIEnhanceImage':'',
       denoise:$('#denoise').val(),
