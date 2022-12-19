@@ -7,13 +7,13 @@ function upload(file,mode,callback){
     `ci-process=AIEnhanceImage&denoise=${$('#denoise').val()}&sharpen=${$('#sharp').val()}`
   ]
   console.log(args[mode])
-  fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
+  fileRandomKey = `ArAI_Enhance_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
   $('#logProgress').show()
   $('#logs').html(`ArAI 文件上传中`);
   cos.putObject({
     Bucket: Bucket, /* 必须 */
     Region: Region,     /* 存储桶所在地域，必须字段 */
-    Key: fileRandomKey,              /* 必须 */
+    Key: `/enhance/${userInfo.id}/${fileRandomKey}`,              /* 必须 */
     StorageClass: 'STANDARD',
     Body: file.files[0], // 上传文件对象
     Headers:{
@@ -21,7 +21,7 @@ function upload(file,mode,callback){
       JSON.stringify({
         "is_pic_info": 1,
         "rules": [{
-            "fileid": `opt_${mode}_${fileRandomKey}`,
+            "fileid": `/enhance/${userInfo.id}/opt_${mode}_${fileRandomKey}`,
             "rule": args[mode]
         }] 
       })
@@ -41,7 +41,7 @@ function upload(file,mode,callback){
     //执行回调
     callback(fileRandomKey)
     //tiia评估质量
-    COSDownload(`/${fileRandomKey}`,'',(msg)=>{
+    COSDownload(`/enhance/${userInfo.id}/${fileRandomKey}`,'',(msg)=>{
       $('#origin').attr('src',msg);
       tiiaAnalysis('AssessQuality',msg,(msg)=>{
         console.log(msg.responseJSON)
@@ -60,7 +60,7 @@ function upload(file,mode,callback){
 
 var generate={
   0:function() {
-    COSDownload(`/opt_0_${fileRandomKey}`,'',
+    COSDownload(`/enhance/${userInfo.id}/opt_0_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
       $('#logProgress').hide()
@@ -68,10 +68,9 @@ var generate={
     })
   },
 
- // {'ci-process':'AISuperResolution'}
 
   1:function() {
-    COSDownload(`/opt_1_${fileRandomKey}`,'',
+    COSDownload(`/enhance/${userInfo.id}/opt_1_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
       $('#logProgress').hide()
@@ -79,12 +78,6 @@ var generate={
     })
   },
 }
-
-// {
-//   'ci-process=AIEnhanceImage':'',
-//   denoise:$('#denoise').val(),
-//   sharpen:$('#sharp').val()
-// }
 
 
 function tiiaAnalysis(path,imageURL,callback){

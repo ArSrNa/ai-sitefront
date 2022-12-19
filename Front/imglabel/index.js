@@ -1,112 +1,138 @@
-function upload() {
-    var imgfile = document.getElementById('imgfile').files
-    if(imgfile.length>0){
-    if(imgfile[0].size<=15000000){
-        $('#doing').show()
-        var cos = new COS({
-            getAuthorization: function (options, callback) {
-                $.ajax({
-                 url:'https://api.arsrna.cn/release/arcos',
-                 type:'GET',
-                 success(data) {
-                     var data=JSON.parse(data)
-                     console.log(data)
-                    var credentials = data && data.credentials;
-                    if (!data || !credentials) return console.error('credentials invalid');
-                    callback({
-                        TmpSecretId: credentials.tmpSecretId,
-                        TmpSecretKey: credentials.tmpSecretKey,
-                        SecurityToken: credentials.sessionToken,
-                        StartTime: data.startTime,
-                        ExpiredTime: data.expiredTime,
-                    });
-                }
-            });
-         }
-         });
-    
-             filekey = "ArAI"+btoa(Math.random()*100000000)+Math.random().toString(36).slice(-8)
-             cos.putObject({
-             Bucket: 'temparai-1257609559', /* 必须 */
-             Region: 'ap-hongkong',     /* 存储桶所在地域，必须字段 */
-             Key: filekey,              /* 必须 */
-             StorageClass: 'STANDARD',
-             Body: document.getElementById('imgfile').files[0], // 上传文件对象
-             onProgress: function(progressData) {
-                //  console.log(progressData);
-    $('#uploadProgress').html('Ar-Sr-Na AI 提交中 '+(progressData.speed/1000)+'k/s')
-    if(progressData.percent==1){
-        var imgURL='https://temparai-1257609559.cos.ap-hongkong.myqcloud.com/'+filekey+'_cop'
-        display(imgURL)
-        generate(scenesG(),imgURL)
+$('#logProgress').hide()
+
+
+function upload(file,callback){
+  fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
+  $('#logProgress').show()
+  $('#logs').html(`ArAI 文件上传中`);
+  cos.putObject({
+    Bucket: Bucket, /* 必须 */
+    Region: Region,     /* 存储桶所在地域，必须字段 */
+    Key: `/label/${userInfo.id}/${fileRandomKey}/${fileRandomKey}`,              /* 必须 */
+    StorageClass: 'STANDARD',
+    Body: file.files[0], // 上传文件对象
+    Headers:{
+      'Pic-Operations':
+      JSON.stringify({
+        "is_pic_info": 1,
+        "rules": [{
+            "fileid": `/label/${userInfo.id}/${fileRandomKey}/opt_${mode}_${fileRandomKey}`,
+            "rule": args[mode]
+        }] 
+      })
+  },
+    onProgress: function(progressData) {
+        console.log(JSON.stringify(progressData));
+        $('#logProgress').html(`<p id="logs" class="col lead">
+        ArAI 提交中  ${((progressData.speed/1024).toFixed(2))} MB/s
+        </p>
+        <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
     }
-             }
-          }, function(err, data) {
-             //alert(JSON.stringify(err || data));
-             console.log(err || data)
-          });
-    }else{
-        alert('错误：文件过大')
+}, function(err, data) {
+    console.log(err || data);
+    if(err){
+      alert(`错误：${err}`)
     }
-    }else{
-        alert('错误：未上传文件')
-    }
-    }
-    
-    
-    function scenesG() {
-    var check = document.getElementsByClassName('yhClass');
-    var scenes=[]
-    for(i1=0;i1<check.length;i1++){
-        if(check[i1].checked){
-           scenes.push(check[i1].value)
-        }else{scenes='["WEB"]'}
-    }
-    return(scenes);
-    }
-    
-     function display(url) {
-        document.getElementById('image').src = url;
-        document.getElementById('fileName').innerHTML = url;
-    }
-    
-    function generate(scenes,url) {
-     $.ajax({
-          type: "GET",
-          url: "https://api.arsrna.cn/release/ArAI_ImgLabel",
-          data: {
-            Scenes:scenes,
-            ImageUrl:url
-          },
-          dataType:"json",
-          success: function(msg){
-    //   console.log(msg);
-      if("errorCode" in msg) {
-          alert("发生错误："+msg);
-          window.location.reload()
-      }
-      else {
-    document.getElementById("doing").style.display="none";
-    $('.pti').html(msg.RequestId);
-    resultGenerate(msg);
-    display(url)
-      }
-          },
-      
-        error: function(err){
-      console.log(err.status + err.statusText);
-      alert('提交失败：' + err.status + err.statusText);
-      }
-      
-      });
-      }
-    
-    function resultGenerate(msg) {
-        var temp = [
-            {"<>":"li","class":"list-group-item","html":"${Name}  ${FirstCategory}  ${SecondCategory}"},
-            {"<>":"div","class":"progress","html":[
-                {"<>":"div","class":"progress-bar bg-success","role":"progressbar","style":"width: ${Confidence}%","aria-valuenow":"${Confidence}","aria-valuemin":"0","aria-valuemax":"100","html":"${Confidence}%"}
-              ]}
-          ];
-          $('#resultDetail').html(json2html.transform(msg.Labels,temp));
-    }
+    //执行回调
+    callback(fileRandomKey)
+    //tiia评估质量
+    COSDownload(`/label/${userInfo.id}/${fileRandomKey}/${fileRandomKey}`,'',(msg)=>{
+      $('#origin').attr('src',msg);
+      tiiaAnalysis('AssessQuality',msg,(msg)=>{
+        console.log(msg.responseJSON)
+        var data=msg.responseJSON;
+        var temp=`<div class="lead">清晰度${data.ClarityScore}%</div><div class="progress">
+        <div class="progress-bar"style="width: ${data.ClarityScore}%">${data.ClarityScore}%</div>
+        </div><div class="lead">美观度${data.AestheticScore}</div><div class="progress">
+        <div class="progress-bar"style="width: ${data.AestheticScore}%">${data.AestheticScore}%</div></div>
+        <hr>
+        <table class="table"><thead><tr><th scope="col">项目</th><th scope="col">详情</th></tr></thead><tbody class="table-group-divider"><tr><th>长图</th><td>${data.LongImage}</td></tr><tr><th>黑白图</th><td>${data.BlackAndWhite}</td></tr><tr><th>小图</th><td>${data.SmallImage}</td></tr><tr><th>大图</th><td>${data.BigImage}</td></tr><tr><th>纯色图</th><td>${data.PureImage}</td></tr><tr><th>RequestId</th><td>${data.RequestId}</td></tr></tbody></table>`;
+       $('#imgAnalysis').html(temp)
+      })
+    });
+});
+}
+
+var generate={
+  0:function() {
+    COSDownload(`/label/${userInfo.id}/${fileRandomKey}/opt_0_${fileRandomKey}`,'',
+    function(msg){
+      $('#process').attr('src',msg);
+      $('#logProgress').hide()
+      $('#AfterDownload').attr('href',msg)
+    })
+  },
+
+ // {'ci-process':'AISuperResolution'}
+
+  1:function() {
+    COSDownload(`/label/${userInfo.id}/${fileRandomKey}/opt_1_${fileRandomKey}`,'',
+    function(msg){
+      $('#process').attr('src',msg);
+      $('#logProgress').hide()
+      $('#AfterDownload').attr('href',msg)
+    })
+  },
+}
+
+// {
+//   'ci-process=AIEnhanceImage':'',
+//   denoise:$('#denoise').val(),
+//   sharpen:$('#sharp').val()
+// }
+
+
+function tiiaAnalysis(path,imageURL,callback){
+   var ajaxbase = $.ajax({
+    headers:{token:tokenAll.access_token},
+    url: "https://api.arsrna.cn/release/tiia/"+path,
+    data: {imageUrl:imageURL},
+    async:false,
+    dataType:'json',
+});
+$('#logProgress').html(`<p id="logs" class="col lead">
+        ArAI TIIA处理中</p>
+        <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
+      try{callback(ajaxbase)}
+      catch(err){console.warn('TIIA回调错误 '+err)}
+}
+
+
+function changeBg(url,select,defaultBg) {
+  if(defaultBg){
+    //选择默认背景时
+    $("#bgFilePath").html('默认背景');
+    localStorage.setItem('backgroundURL','https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web');
+  }else{
+     $("#bgFilePath").html(url);
+     localStorage.setItem('backgroundURL',url);
+  }
+  localStorage.setItem('backgroundSwitch',select);
+  location.reload()
+}
+
+function startChangeBg() {
+  var url = localStorage.getItem('backgroundURL'),
+      open = localStorage.getItem('backgroundSwitch');
+      //背景设置部分
+  if(open=='true'){
+    $("#bgFilePath").html(url);
+    $("#bgSwitch")[0].checked = true;
+    $('.backgroundImg').attr('src',url)
+  }else{
+    $(".backgroundImg").remove();
+    $("#bgSwitch")[0].checked = false;
+  }
+}
+
+
+function changeOptions(val){
+  switch(val){
+    case '0'||'2':
+      $('.optRange').attr('disabled','')
+    break;
+    case '1':
+      $('.optRange').removeAttr('disabled')
+    break
+  }
+}
