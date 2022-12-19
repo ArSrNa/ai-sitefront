@@ -16,16 +16,16 @@ function upload(file,mode,callback){
     Key: fileRandomKey,              /* 必须 */
     StorageClass: 'STANDARD',
     Body: file.files[0], // 上传文件对象
-  //   Headers:{
-  //     'Pic-Operations':
-  //     JSON.stringify({
-  //       "is_pic_info": 1,
-  //       "rules": [{
-  //           "fileid": `opt_${mode}_${fileRandomKey}`,
-  //           "rule": args[mode]
-  //       }] 
-  //     })
-  // },
+    Headers:{
+      'Pic-Operations':
+      JSON.stringify({
+        "is_pic_info": 1,
+        "rules": [{
+            "fileid": `opt_${mode}_${fileRandomKey}`,
+            "rule": args[mode]
+        }] 
+      })
+  },
     onProgress: function(progressData) {
         console.log(JSON.stringify(progressData));
         $('#logProgress').html(`<p id="logs" class="col lead">
@@ -60,7 +60,7 @@ function upload(file,mode,callback){
 
 var generate={
   0:function() {
-    COSDownload(`/${fileRandomKey}`,{'ci-process':'AISuperResolution'},
+    COSDownload(`/opt_0_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
       $('#logProgress').hide()
@@ -68,12 +68,10 @@ var generate={
     })
   },
 
+ // {'ci-process':'AISuperResolution'}
+
   1:function() {
-    COSDownload(`/${fileRandomKey}`,{
-      'ci-process=AIEnhanceImage':'',
-      denoise:$('#denoise').val(),
-      sharpen:$('#sharp').val()
-    },
+    COSDownload(`/opt_1_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
       $('#logProgress').hide()
@@ -82,6 +80,11 @@ var generate={
   },
 }
 
+// {
+//   'ci-process=AIEnhanceImage':'',
+//   denoise:$('#denoise').val(),
+//   sharpen:$('#sharp').val()
+// }
 
 
 function tiiaAnalysis(path,imageURL,callback){
