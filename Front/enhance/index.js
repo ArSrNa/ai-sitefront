@@ -13,7 +13,7 @@ function upload(file,mode,callback){
   cos.putObject({
     Bucket: Bucket, /* 必须 */
     Region: Region,     /* 存储桶所在地域，必须字段 */
-    Key: `/enhance/${userInfo.id}/${fileRandomKey}`,              /* 必须 */
+    Key: `/ai/enhance/${userInfo.id}/${fileRandomKey}`,              /* 必须 */
     StorageClass: 'STANDARD',
     Body: file.files[0], // 上传文件对象
     Headers:{
@@ -21,7 +21,7 @@ function upload(file,mode,callback){
       JSON.stringify({
         "is_pic_info": 1,
         "rules": [{
-            "fileid": `/enhance/${userInfo.id}/opt_${mode}_${fileRandomKey}`,
+            "fileid": `/ai/enhance/${userInfo.id}/opt_${mode}_${fileRandomKey}`,
             "rule": args[mode]
         }] 
       })
@@ -41,7 +41,7 @@ function upload(file,mode,callback){
     //执行回调
     callback(fileRandomKey)
     //tiia评估质量
-    COSDownload(`/enhance/${userInfo.id}/${fileRandomKey}`,'',(msg)=>{
+    COSDownload(`/ai/enhance/${userInfo.id}/${fileRandomKey}`,'',(msg)=>{
       $('#origin').attr('src',msg);
       tiiaAnalysis('AssessQuality',msg,(msg)=>{
         console.log(msg.responseJSON)
@@ -60,7 +60,7 @@ function upload(file,mode,callback){
 
 var generate={
   0:function() {
-    COSDownload(`/enhance/${userInfo.id}/opt_0_${fileRandomKey}`,'',
+    COSDownload(`/ai/enhance/${userInfo.id}/opt_0_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
       $('#logProgress').hide()
@@ -70,7 +70,7 @@ var generate={
 
 
   1:function() {
-    COSDownload(`/enhance/${userInfo.id}/opt_1_${fileRandomKey}`,'',
+    COSDownload(`/ai/enhance/${userInfo.id}/opt_1_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
       $('#logProgress').hide()

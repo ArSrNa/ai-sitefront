@@ -2,7 +2,7 @@ $('#logProgress').hide()
 
 function upload(file,callback){
   fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
-  filePath=`/label/${userInfo.id}/${fileRandomKey}`
+  filePath=`/ai/label/${userInfo.id}/${fileRandomKey}`
   $('#logProgress').show()
   $('#logs').html(`ArAI 文件上传中`);
   cos.putObject({
