@@ -13,7 +13,7 @@
 <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-ms/layer/3.5.1/layer.min.js"></script>
 <script src="https://www.arsrna.cn/js/arauth.js"></script>
 <link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"></script>
+<script src="../js/cos-js-sdk-v5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="../login.js"></script>
 <script src="../js/cos.js"></script>
@@ -113,8 +113,7 @@
               <div class="row align-items-center" id="logProgress">
                 
               </div>
-           
-              
+           <small class="text-muted">RequestId: <span id="reqid"></span></small>
           </div>
         </div>
         </div>
@@ -130,43 +129,7 @@
         </div>
 </div> 
 
-<div class="d-grid gap-2">
-  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#changeBg">更换背景</button>
-</div>
-
-<div class="modal fade" id="changeBg" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="10" aria-labelledby="changeBgLabel">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="changeBgLabel">选择一张图片</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-        </button>
-      </div>
-      <div class="modal-body">
-        <input type="text" class="form-control" placeholder="请输入图片URL，因浏览器原因暂不支持本地文件上传" id="bgFile" oninput="$('#bgFilePath').html(this.value)">
-        <div class="text-muted" id="bgFilePath">
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <input class="form-check-input" type="checkbox" id="bgSwitch" checked onchange="
-            if(this.checked){$('#bgFile').removeAttr('readonly')}else{$('#bgFile').attr('readonly','')}">
-            <label class="form-check-label" for="bgSwitch">开启背景</label>
-          </div>
-          <div class="col-6">
-            <input class="form-check-input" type="checkbox" id="defaultBg" onchange="
-            if(this.checked){$('#bgFile').attr('readonly','')}else{$('#bgFile').removeAttr('readonly')}">
-            <label class="form-check-label" for="defaultBg">默认背景</label>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary" onclick="changeBg($('#bgFilePath').html(),$('#bgSwitch')[0].checked,$('#defaultBg')[0].checked);"
-        data-bs-dismiss="modal">确定</button>
-      </div>
-    </div>
-  </div>
-</div>
+<div id="bgChangeContainer"></div>
 
 
 <div style="height: 20vh;"></div>

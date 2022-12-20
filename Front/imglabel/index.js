@@ -20,6 +20,7 @@ function upload(file,callback){
     }
 }, function(err, data) {
     console.log(err || data);
+    $('#reqid').html(data.RequestId)
     if(err){
       alert(`错误：${err}`)
     }
