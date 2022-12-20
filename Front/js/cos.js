@@ -9,12 +9,7 @@ var cos = new COS({
     getAuthorization: function (options, callback) {
       $.ajax({
         headers:{token:tokenAll.access_token},
-        url:'https://api.arsrna.cn/release/coskey_write',
-        data:{
-          bucket:'temporary',
-          APPID:1257609559,
-          region:'ap-guangzhou'
-        },
+        url:'https://api.ai.arsrna.cn/release/coskey_write',
         type:'POST',
         dataType:'json',
         async:false,
