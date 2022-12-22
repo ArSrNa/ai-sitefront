@@ -1,0 +1,116 @@
+{
+    "ImageHeight": 1067,
+    "FaceDetailInfos": [
+        {
+            "FaceRect": {
+                "X": 234,
+                "Y": 295,
+                "Width": 400,
+                "Height": 520
+            },
+            "FaceDetailAttributesInfo": {
+                "Beauty": 100,
+                "Mask": {
+                    "Type": 4,
+                    "Probability": 0.9983822
+                },
+                "Mouth": {
+                    "MouthOpen": {
+                        "Probability": 0.74798024,
+                        "Type": 0
+                    }
+                },
+                "Nose": {
+                    "Type": 2,
+                    "Probability": 0.71574694
+                },
+                "Age": 27,
+                "Emotion": {
+                    "Probability": 0,
+                    "Type": 0
+                },
+                "Eye": {
+                    "Glass": {
+                        "Probability": 0.9919619,
+                        "Type": 0
+                    },
+                    "EyeOpen": {
+                        "Type": 0,
+                        "Probability": 0.9994584
+                    },
+                    "EyelidType": {
+                        "Type": 0,
+                        "Probability": 0.6010105
+                    },
+                    "EyeSize": {
+                        "Type": 1,
+                        "Probability": 0.4055771
+                    }
+                },
+                "Hair": {
+                    "Length": {
+                        "Type": 3,
+                        "Probability": 0.6355188
+                    },
+                    "Bang": {
+                        "Type": 1,
+                        "Probability": 0.9905325
+                    },
+                    "Color": {
+                        "Type": 1,
+                        "Probability": 0.949742
+                    }
+                },
+                "Hat": {
+                    "Style": {
+                        "Type": 0,
+                        "Probability": 0.8533846
+                    },
+                    "Color": {
+                        "Type": 0,
+                        "Probability": 1
+                    }
+                },
+                "Moustache": {
+                    "Type": 0,
+                    "Probability": 0.9998323
+                },
+                "Shape": {
+                    "Probability": 0.5091971,
+                    "Type": 3
+                },
+                "Skin": {
+                    "Type": 0,
+                    "Probability": 0.99941397
+                },
+                "Smile": 24,
+                "Eyebrow": {
+                    "EyebrowDensity": {
+                        "Type": 1,
+                        "Probability": 0.68431973
+                    },
+                    "EyebrowCurve": {
+                        "Type": 0,
+                        "Probability": 0.7438481
+                    },
+                    "EyebrowLength": {
+                        "Type": 1,
+                        "Probability": 0.6519687
+                    }
+                },
+                "Gender": {
+                    "Type": 1,
+                    "Probability": 0.9991691
+                },
+                "HeadPose": {
+                    "Pitch": 19,
+                    "Yaw": 0,
+                    "Roll": 4
+                }
+            }
+        }
+    ],
+    "FaceModelVersion": "3.0",
+    "RequestId": "0db652c5-a5c2-4d9d-accf-1340eb0865bf",
+    "ImageWidth": 800
+}
