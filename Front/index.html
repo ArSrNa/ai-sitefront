@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.2.1/css/all.css" rel="stylesheet">
+    <script src="js/fa.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.3.0/layer.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/ArSrNa/ArUI-Progress/arloading.css" rel="stylesheet">
 <script src="https://www.arsrna.cn/js/arauth.js"></script>
@@ -66,9 +66,48 @@
 
 <div id="product" class="mb-3"><div class="sap mb-3">产品</div>
 <div class="container">
+
+  <div class="display-6 text-white mb-3">自然语言</div>
+  <div class="row mb-3">
+
+    <div class="col-md-6">
+      <div class="card text-bg-dark">
+          <div class="card-header"><i class="fa-solid fa-newspaper fa-fw"></i>
+            篇章分析</div>
+          <div class="card-body">
+              <div class="card-text">通过对文本内容进行深度分析，提取出文本内容中的信息，实现多种文本分析效果</div>
+              <br>
+              <a href="text/tia/" target="_blank" class="btn btn-primary position-relative">
+                点击进入
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  New
+                </span>
+              </a>
+          </div>
+      </div>
+      </div>
+
+  <div class="col-md-6">
+  <div class="card text-bg-dark">
+      <div class="card-header"><i class="fa-solid fa-comments fa-fw"></i>
+        智能对话</div>
+      <div class="card-body">
+          <div class="card-text">基于腾讯领先的NLP引擎能力、数据运算能力和千亿级互联网语料数据的支持，同时集成了广泛的知识问答能力，可实现上百种自定义属性配置，以及儿童语言风格及说话方式，从而让聊天变得更睿智、简单和有趣。</div>
+          <br>
+          <a href="text/chat/" target="_blank" class="btn btn-primary position-relative">
+            点击进入
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              New
+            </span>
+          </a>
+      </div>
+  </div>
+  </div>
+  </div>
+
     <div class="display-6 text-white mb-3">图像分析，识别</div>
-    <div class="row">
-    <div class="col-md-6 mb-2">
+    <div class="row mb-3">
+    <div class="col-md-6">
     <div class="card text-bg-dark">
         <div class="card-header"><i class="fa-solid fa-check fa-fw"></i>图像识别-鉴黄</div>
         <div class="card-body">
@@ -87,9 +126,6 @@
                 <div class="card-text">对图片分类，找到适合图片的标签进行分类</div>
                 <br>
                 <a href="imglabel/" target="_blank" class="btn btn-primary position-relative">
-                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                    New
-                  </span>
                   点击进入</a>
             </div>
         </div>
@@ -143,11 +179,8 @@
 </div>
 </div>
 
-</div>
 
 <hr>
-
-
 </div>
 
 <div class="text-center">
