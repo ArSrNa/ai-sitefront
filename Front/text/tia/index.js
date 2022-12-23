@@ -1,6 +1,5 @@
 function submit(){
-  generateLoad('查询中','.logProgress')
-
+  $('.logProgress').show()
       query('tia',{
         text:$('#mainText').val(),
         num:$('#tiaNum').val()
@@ -14,6 +13,7 @@ function submit(){
           //console.log(data)
           if(msg.responseJSON.success){
             $('#tiaAnalysis').html(json2html.transform(data.Keywords,temp))
+            $('.logProgress').hide()
           }else{
             alert(`错误：${data}`)
           }
