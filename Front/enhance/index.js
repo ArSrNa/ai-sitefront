@@ -44,12 +44,19 @@ function upload(file,mode,callback){
       tiiaAnalysis('AssessQuality',msg,(msg)=>{
         console.log(msg.responseJSON)
         var data=msg.responseJSON;
+        var resCss={true:'是',false:'否'}
         var temp=`<div class="lead">清晰度${data.ClarityScore}%</div><div class="progress">
         <div class="progress-bar"style="width: ${data.ClarityScore}%">${data.ClarityScore}%</div>
         </div><div class="lead">美观度${data.AestheticScore}</div><div class="progress">
         <div class="progress-bar"style="width: ${data.AestheticScore}%">${data.AestheticScore}%</div></div>
         <hr>
-        <table class="table"><thead><tr><th scope="col">项目</th><th scope="col">详情</th></tr></thead><tbody class="table-group-divider"><tr><th>长图</th><td>${data.LongImage}</td></tr><tr><th>黑白图</th><td>${data.BlackAndWhite}</td></tr><tr><th>小图</th><td>${data.SmallImage}</td></tr><tr><th>大图</th><td>${data.BigImage}</td></tr><tr><th>纯色图</th><td>${data.PureImage}</td></tr><tr><th>RequestId</th><td>${data.RequestId}</td></tr></tbody></table>`;
+        <table class="table"><thead><tr><th scope="col">项目</th><th scope="col">详情</th></tr></thead><tbody class="table-group-divider"><tr>
+        <th>长图</th><td>${resCss[data.LongImage]}</td></tr><tr>
+        <th>黑白图</th><td>${resCss[data.BlackAndWhite]}</td></tr><tr>
+        <th>小图</th><td>${resCss[data.SmallImage]}</td></tr><tr>
+        <th>大图</th><td>${resCss[data.BigImage]}</td></tr><tr>
+        <th>纯色图</th><td>${resCss[data.PureImage]}</td></tr><tr>
+        <th>RequestId</th><td>${resCss[data.RequestId]}</td></tr></tbody></table>`;
        $('#imgAnalysis').html(temp)
       })
     });
