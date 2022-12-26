@@ -24,20 +24,27 @@
             <img id="bg" src="https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/18c57c937df18805dc20b0894bf803e3_6628881501389920137.png" alt="...">
             <div class="card-img-overlay overlayText" style="overflow: hidden;">
               <div class="display-3"><i class="bi bi-exclamation-triangle-fill">&nbsp;</i>
-              接口维护</div>
+              ArAI 接口维护通知</div>
              <hr>
               <p class="lead" style="line-height: 2rem;">
-                <i class="bi bi-info-circle-fill">&nbsp;</i>因API接口出现严重故障，故暂时维护
+                <i class="bi bi-info-circle-fill">&nbsp;</i>因后端接口出现故障，故暂时维护
               <br>
-                <h2 class="card-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>为什么会出现该页面？</h2>
+                <h2 class="card-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>事故进展</h2>
           <div class="text-white">2022-12-25 23:17 本站发现CI后端接口识别到特定图像特征时会返回错误图片，导致其他用户图片泄露或花屏损坏<br>
             2022-12-26 00:18 本站向腾讯云CI团队反馈，提供Request信息，并100%复现该问题，但未找到问题特征<br>
             2022-12-26 9:32 因开发需要，本站开放临时数据专用存储桶为公有读，为保护用户隐私安全，暂时关闭本站<br>
             2022-12-26 11:57 已定位到 AIEnhanceImage 接口花屏原因为分辨率限制，超过1920*1920的图片异常，已修复该接口<br>
             2022-12-26 16:40 已修复 AISuperResolution 接口返回未知图片问题<br>
             2022-12-26 19:11 已定位到接口问题，临时上线小版本修复，等待修复进度<br>
+            2022-12-26 20:13 已确认所有接口均为分辨率大小问题<br>
             请耐心等待本站修复
         </div>
+        <hr>
+        <h2 class="card-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>事故处理措施</h2>
+        <div class="text-white">
+          2022-12-26 20:13 超出分辨率的暂时返回原图，而不是返回错误图片。暂时限制上传分辨率，等待后端处理。<br>
+          请耐心等待本站修复
+      </div>
                 <br>此致
                 <br>Ar-Sr-Na <a href="https://www.arsrna.cn" class="text-white">访问主站</a>
               </p>
