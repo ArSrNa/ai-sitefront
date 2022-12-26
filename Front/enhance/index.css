@@ -50,3 +50,18 @@
   .arimg {
 	max-height: 100vh;
   }
+
+
+  .ArloadLine{
+    width: 100%;
+    height: 3px;
+    overflow: hidden;
+}
+
+.ArloadLine>div{
+    position: relative;
+    width: 0px;
+    height: 3px;
+    background-color: royalblue;
+	transition: width 1s;
+}

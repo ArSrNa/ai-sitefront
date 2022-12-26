@@ -1,7 +1,5 @@
-$('#logProgress').hide()
-
-
 function upload(file,mode,callback){
+  $('#logProgress').show()
   var args=[
     `ci-process=AISuperResolution`,
     `ci-process=AIEnhanceImage&denoise=${$('#denoise').val()}&sharpen=${$('#sharp').val()}`
@@ -28,10 +26,8 @@ function upload(file,mode,callback){
   },
     onProgress: function(progressData) {
         console.log(JSON.stringify(progressData));
-        $('#logProgress').html(`<p id="logs" class="col lead">
-        ArAI 提交中  ${((progressData.speed/1024).toFixed(2))} MB/s
-        </p>
-        <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
+        $('.ArProgressLogText').html(`ArAI 上传中 ${(progressData.percent)*100}% | ${progressData.speed} B/s`)
+        $('#ArProgress').width(`${(progressData.percent)*100}%`)
     }
 }, function(err, data) {
     console.log(err || data);
@@ -65,7 +61,7 @@ var generate={
     COSDownload(`/ai/enhance/${userInfo.id}/opt_0_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
-      $('#logProgress').hide()
+      $('.ArProgressLogText').html(`200 OK`)
       $('#AfterDownload').attr('href',msg)
       $('#AfterDownload').removeClass('disabled')
     })
@@ -76,7 +72,7 @@ var generate={
     COSDownload(`/ai/enhance/${userInfo.id}/opt_1_${fileRandomKey}`,'',
     function(msg){
       $('#process').attr('src',msg);
-      $('#logProgress').hide()
+      $('.ArProgressLogText').html(`200 OK`)
       $('#AfterDownload').attr('href',msg)
       $('#AfterDownload').removeClass('disabled')
     })
@@ -92,9 +88,6 @@ function tiiaAnalysis(path,imageURL,callback){
     async:false,
     dataType:'json',
 });
-$('#logProgress').html(`<p id="logs" class="col lead">
-        ArAI TIIA处理中</p>
-        <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
       try{callback(ajaxbase)}
       catch(err){console.warn('TIIA回调错误 '+err)}
 }
