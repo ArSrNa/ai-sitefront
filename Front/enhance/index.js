@@ -63,6 +63,30 @@ function upload(file,mode,callback){
 });
 }
 
+
+function judgeSize(file){
+  var img = new Image();
+  img.onload = function(){    
+      // 获取原宽高
+      if(file.files[0].size/Math.pow(1024,2)>5||img.naturalHeight>1920||img.naturalWidth>1920){
+        alert('文件不符合要求，请重新选择')
+        $('#btnSubmit').attr('disabled','')
+        file.click();
+        file.value='';
+      }else{
+        $('#btnSubmit').removeAttr('disabled')
+      }
+      if(file.files.length==0){
+        $('#btnSubmit').attr('disabled','')
+      }else{
+        $('#btnSubmit').removeAttr('disabled')
+      }
+  }
+  //把图片 插插插插 进去
+  img.src=URL.createObjectURL(file.files[0])
+  
+}
+
 var generate={
   0:function() {
     COSDownload(`/ai/enhance/${userInfo.id}/opt_0_${fileRandomKey}`,'',
