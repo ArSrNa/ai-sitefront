@@ -8,13 +8,14 @@
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
-    <!-- <link href="index.css" rel="stylesheet"> -->
   </head>
   <body style="background-color: black">
-
-    <nav class="navbar navbar-light nav-blur lead" style="height: 70px; z-index:-1">
-      <div class="container-fluid">
-      <i class="bi bi-info-circle-fill"> 公告 | Ar-Sr-Na</i> 
+    <nav class="navbar navbar-dark nav-blur-dark lead" style="height: 70px; z-index:-1">
+      <div class="container-fluid text-white">
+      <i class="bi bi-info-circle-fill" style="margin-right:10px;"></i>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainNavContent">
+        <a class="navbar-brand" href="#">公告 | Ar-Sr-Na</a>
+      </ul>
     </div>
     </nav>
 
@@ -25,7 +26,7 @@
               接口维护</div>
              <hr>
               <p class="lead" style="line-height: 2rem;">
-                <i class="bi bi-info-circle-fill">&nbsp;</i>因API接口出现严重，故暂时维护
+                <i class="bi bi-info-circle-fill">&nbsp;</i>因API接口出现严重故障，故暂时维护
               <br>
                 <h2 class="card-title"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>为什么会出现该页面？</h2>
           <div class="lead">2022-12-25 23:17 本站发现CI后端接口识别到特定图像特征时会返回错误图片，导致其他用户图片泄露或花屏损坏<br>
@@ -41,16 +42,6 @@
 </html>
 
 <style>
-  #bg{
-    overflow: hidden;
-    object-fit: cover;
-    width: 100%;
-    z-index: -2;
-    position: fixed;
-    filter: brightness(100%);
-    height: 100vh;
-}
-
 .overlayText {
     top: 30vh;
     right: 0;
@@ -61,33 +52,21 @@
     height: 100vh;
     align-content: center;
     position: absolute;
-    /* animation-name: hc;
-    animation-duration: .5s;
-    animation-fill-mode: both;
-    animation-timing-function: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1);
-    animation-delay: 1s; */
   }
-  
-  /* #nav {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    z-index: 0;
-    animation-name: navExpand;
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    animation-delay: 1s;
-    animation-timing-function: cubic-bezier(0.46, 0.15, 0, 0.82);
-    height: 100vh;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-  } */
-  
-  body {
+    
+  /* body {
     overflow-x: hidden;
     overflow-y: hidden;
-  }
+  } */
   
   #bg {
+    overflow: hidden;
+    object-fit: cover;
+    width: 100%;
+    z-index: -2;
+    position: fixed;
+    filter: brightness(100%);
+    height: 100vh;
     background-color: rgb(0, 0, 0);
     animation-name: bgdark;
     animation-duration: 1s;
