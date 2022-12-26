@@ -9,9 +9,11 @@ console.log(`
                ##
 `)
 console.log('Powered by ArSrNa RenderInfinity')
-console.log('我永远喜欢爱莉希雅！')
-console.warn('不你喜欢布洛妮娅')
-console.error('我全都要！')
+console.warn('我永远喜欢爱莉希雅！')
+console.error('不，你喜欢布洛妮娅！')
+console.warn('布洛妮娅天下第一！')
+console.error('可是希儿会叫你起床！！！')
+console.warn('我全都要')
 function upload(file,mode,callback){
   $('#logProgress').show()
   var args=[
