@@ -47,3 +47,6 @@
 	-webkit-backdrop-filter: saturate(2) blur(10px);
   }
   
+  .arimg {
+	max-height: 100vh;
+  }

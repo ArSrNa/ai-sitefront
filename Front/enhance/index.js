@@ -35,6 +35,8 @@ function upload(file,mode,callback){
     }
 }, function(err, data) {
     console.log(err || data);
+    $('#beforeInfo').html(`ETag: ${data.UploadResult.OriginalInfo.ETag}<br>key: ${data.UploadResult.OriginalInfo.Key}`)
+    $('#aftInfo').html(`x-cos-request-id: ${data.RequestId}<br>ETag: ${data.ETag}`)
     if(err){
       alert(`错误：${err}`)
     }
@@ -65,6 +67,7 @@ var generate={
       $('#process').attr('src',msg);
       $('#logProgress').hide()
       $('#AfterDownload').attr('href',msg)
+      $('#AfterDownload').removeClass('disabled')
     })
   },
 
@@ -75,6 +78,7 @@ var generate={
       $('#process').attr('src',msg);
       $('#logProgress').hide()
       $('#AfterDownload').attr('href',msg)
+      $('#AfterDownload').removeClass('disabled')
     })
   },
 }
