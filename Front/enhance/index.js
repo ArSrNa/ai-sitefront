@@ -1,10 +1,24 @@
+console.log(`
+####    ##                    #         
+#        #                              
+###      #    #  #   ####    ##     ### 
+#        #    #  #   ##       #    #  # 
+#        #    ## #     ##     #    #  # 
+####    ###     ##   ####    ###    ####
+              #  #
+               ##
+`)
+console.log('Powered by ArSrNa RenderInfinity')
+console.log('我永远喜欢爱莉希雅！')
+console.warn('不你喜欢布洛妮娅')
+console.error('我全都要！')
 function upload(file,mode,callback){
   $('#logProgress').show()
   var args=[
     `ci-process=AISuperResolution`,
     `ci-process=AIEnhanceImage&denoise=${$('#denoise').val()}&sharpen=${$('#sharp').val()}`
   ]
-  console.log(args[mode])
+  //console.log(args[mode])
   fileRandomKey = `ArAI_Enhance_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
   $('#logProgress').show()
   $('#logs').html(`ArAI 文件上传中`);
@@ -25,12 +39,12 @@ function upload(file,mode,callback){
       })
   },
     onProgress: function(progressData) {
-        console.log(JSON.stringify(progressData));
+        //console.log(JSON.stringify(progressData));
         $('.ArProgressLogText').html(`ArAI 上传中 ${(progressData.percent)*100}% | ${progressData.speed} B/s`)
         $('#ArProgress').width(`${(progressData.percent)*100}%`)
     }
 }, function(err, data) {
-    console.log(err || data);
+    //console.log(err || data);
     $('#beforeInfo').html(`ETag: ${data.UploadResult.OriginalInfo.ETag}<br>key: ${data.UploadResult.OriginalInfo.Key}`)
     $('#aftInfo').html(`x-cos-request-id: ${data.RequestId}<br>ETag: ${data.ETag}`)
     if(err){
@@ -42,7 +56,7 @@ function upload(file,mode,callback){
     COSDownload(`/ai/enhance/${userInfo.id}/${fileRandomKey}`,'',(msg)=>{
       $('#origin').attr('src',msg);
       tiiaAnalysis('AssessQuality',msg,(msg)=>{
-        console.log(msg.responseJSON)
+        //console.log(msg.responseJSON)
         var data=msg.responseJSON;
         var resCss={true:'是',false:'否'}
         var temp=`<div class="lead">清晰度${data.ClarityScore}%</div><div class="progress">
@@ -69,7 +83,7 @@ function judgeSize(file){
   img.onload = function(){    
       // 获取原宽高
       if(file.files[0].size/Math.pow(1024,2)>5||img.naturalHeight>1920||img.naturalWidth>1920){
-        alert('文件不符合要求，请重新选择')
+        layer.msg('文件不符合要求（大小<5M，分辨率<1920*1920），请重新选择')
         $('#btnSubmit').attr('disabled','')
         file.click();
         file.value='';
