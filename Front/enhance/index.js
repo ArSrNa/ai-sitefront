@@ -15,7 +15,9 @@ console.warn('布洛妮娅天下第一！')
 console.error('可是希儿会叫你起床！！！')
 console.warn('我全都要')
 function upload(file,mode,callback){
+  $('#btnSubmit').attr('disabled','')
   $('#logProgress').show()
+  $('#origin,#process').css('filter','brightness(0.5) blur(5px)')
   var args=[
     `ci-process=AISuperResolution`,
     `ci-process=AIEnhanceImage&denoise=${$('#denoise').val()}&sharpen=${$('#sharp').val()}`
@@ -42,7 +44,7 @@ function upload(file,mode,callback){
   },
     onProgress: function(progressData) {
         //console.log(JSON.stringify(progressData));
-        $('.ArProgressLogText').html(`ArAI 上传中 ${(progressData.percent)*100}% | ${progressData.speed} B/s`)
+        $('.ArProgressLogText').html(`上传中 ${(progressData.percent)*100}% | ${(progressData.speed/1000000).toFixed(2)} MB/s`)
         $('#ArProgress').width(`${(progressData.percent)*100}%`)
     }
 }, function(err, data) {
@@ -107,8 +109,10 @@ var generate={
   0:function() {
     COSDownload(`/ai/enhance/${userInfo.id}/opt_0_${fileRandomKey}`,'',
     function(msg){
+      $('#origin,#process').css('filter','')
+      $('#btnSubmit').removeAttr('disabled')
       $('#process').attr('src',msg);
-      $('.ArProgressLogText').html(`200 OK`)
+      $('.ArProgressLogText').html(`完成`)
       $('#AfterDownload').attr('href',msg)
       $('#AfterDownload').removeClass('disabled')
     })
@@ -118,8 +122,10 @@ var generate={
   1:function() {
     COSDownload(`/ai/enhance/${userInfo.id}/opt_1_${fileRandomKey}`,'',
     function(msg){
+      $('#origin,#process').css('filter','')
+      $('#btnSubmit').removeAttr('disabled')
       $('#process').attr('src',msg);
-      $('.ArProgressLogText').html(`200 OK`)
+      $('.ArProgressLogText').html(`完成`)
       $('#AfterDownload').attr('href',msg)
       $('#AfterDownload').removeClass('disabled')
     })

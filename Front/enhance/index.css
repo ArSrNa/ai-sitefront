@@ -65,3 +65,7 @@
     background-color: royalblue;
 	transition: width 1s;
 }
+
+#process,#origin{
+	transition: filter .5s ease-in-out;
+}
