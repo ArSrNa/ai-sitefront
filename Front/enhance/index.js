@@ -25,7 +25,6 @@ function upload(file,mode,callback){
   //console.log(args[mode])
   fileRandomKey = `ArAI_Enhance_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
   $('#logProgress').show()
-  $('#logs').html(`ArAI 文件上传中`);
   cos.putObject({
     Bucket: Bucket, /* 必须 */
     Region: Region,     /* 存储桶所在地域，必须字段 */

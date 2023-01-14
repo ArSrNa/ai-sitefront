@@ -1,4 +1,3 @@
-$('#logProgress').hide()
 function upload(file,callback){
   fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
   $('#logProgress').show()
@@ -10,11 +9,10 @@ function upload(file,callback){
     StorageClass: 'STANDARD',
     Body: file.files[0], // 上传文件对象
     onProgress: function(progressData) {
+        $('#btnSubmit').attr('disabled','')
         console.log(JSON.stringify(progressData));
-        $('#logProgress').html(`<p id="logs" class="col lead">
-        ArAI 提交中  ${((progressData.speed/1024).toFixed(2))} MB/s
-        </p>
-        <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
+        $('.ArProgressLogText').html(`上传中 ${(progressData.percent)*100}% | ${(progressData.speed/1000000).toFixed(2)} MB/s`)
+        $('#ArProgress').width(`${(progressData.percent)*100}%`)
     }
 }, function(err, data) {
     console.log(err || data);
@@ -28,6 +26,7 @@ function upload(file,callback){
 }
 
 function generate(key){
+  $('.ArProgressLogText').html(`IAI处理中...`)
   COSDownload(`/ai/face_analyze/${userInfo.id}/${key}`,
   {'face_analyze':''},
   (data)=>{
@@ -41,12 +40,15 @@ function generate(key){
         FaceAttributesType: getDetectObj()
       },
       success(msg){
+        $('#btnSubmit').removeAttr('disabled')
         $('#logProgress').hide()
         console.log(msg)
         if(msg.success){
           //成功回调
           window.allData=msg.data
           display(msg.data)
+          $('.ArProgressLogText').html(`成功`)
+          localStorage.setItem('airesult',JSON.stringify(msg.data))
         }else{
           layer.open({
             title: "发生错误",
@@ -121,9 +123,10 @@ function display(msg){
 }
 
 
+
 function displayAll(){
   layer.open({
     title: "详细数据",
-    content: ``,
+    content: `<pre>${JSON.stringify(JSON.parse(localStorage.airesult),null,2)}</pre>`,
   })
 }
