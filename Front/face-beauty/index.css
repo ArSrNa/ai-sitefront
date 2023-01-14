@@ -1,5 +1,7 @@
 .result {
     min-height: 500px;
+    position: relative;
+    height: auto;
 }
 
 .restext {
@@ -9,7 +11,7 @@
     padding-left: 5%;
 }
 
-.result {
-    position: relative;
-    height: auto;
+
+.form-range{
+    width: 100%;
 }

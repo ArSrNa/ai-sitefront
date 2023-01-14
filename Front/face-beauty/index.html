@@ -72,7 +72,7 @@
                     <label for="imgfile" class="form-label">请保证内容在5M以内，分辨率大于256*256，本站API不会存储人脸信息！</label>
                     <div class="input-group">
                         <input class="form-control" type="file" class="custom-file-input" id="imgfile" disabled>
-                        <button class="btn btn-primary" id="submitBtn" onclick="ToBase64();" disabled>提交</button>
+                        <button class="btn btn-primary" id="submitBtn" onclick="ToBase64();this.setAttribute('disabled','')" disabled>提交</button>
                       </div>
                       <div class="alert alert-primary" id="alertLogin">请先登录后再使用，点击右上角登录，若无账号请注册</div>
 
@@ -92,17 +92,14 @@
 
                     <h1 class="display-4">美颜配置</h1>
                     <div class="lead">
-
-                        <div class="row">
             <span>磨皮程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
+            <input class="beautyRange form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
             <span> 美白程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
+            <input class="beautyRange form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />    
             <span>瘦脸程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
+            <input class="beautyRange form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
             <span>大眼程度：<span class="brText">10</span></span>
-            <input class="beautyRange" class="form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
-                        </div>
+            <input class="beautyRange form-range" type="range" min="10" max="100" value="10" step="1" oninput="rangeChange()" disabled />
                     </div>
 
                 </div>
@@ -140,10 +137,19 @@
 
 
 
-    <script src="https://www.arsrna.cn/footer.js"></script>
+    <script type="module">import 'https://cdn-go.cn/aegis/aegis-sdk/latest/aegis.min.js';
+        const aegis = new Aegis({
+            id: 'QlWyV8Np04vdN15Yok',
+            uin: navigator.userAgent,
+            reportApiSpeed: true,
+            reportAssetSpeed: true,
+            spa: true
+          });
+      </script>
 </body>
 
 </html>
+
 <script>
     $(document).ready(()=>{
         getUser('#imgfile,#submitBtn,.beautyRange','#alertLogin')

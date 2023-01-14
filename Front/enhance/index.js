@@ -109,7 +109,6 @@ var generate={
     COSDownload(`/ai/enhance/${userInfo.id}/opt_0_${fileRandomKey}`,'',
     function(msg){
       $('#origin,#process').css('filter','')
-      $('#btnSubmit').removeAttr('disabled')
       $('#process').attr('src',msg);
       $('.ArProgressLogText').html(`完成`)
       $('#AfterDownload').attr('href',msg)
@@ -122,7 +121,6 @@ var generate={
     COSDownload(`/ai/enhance/${userInfo.id}/opt_1_${fileRandomKey}`,'',
     function(msg){
       $('#origin,#process').css('filter','')
-      $('#btnSubmit').removeAttr('disabled')
       $('#process').attr('src',msg);
       $('.ArProgressLogText').html(`完成`)
       $('#AfterDownload').attr('href',msg)

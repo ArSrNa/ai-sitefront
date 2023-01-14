@@ -74,14 +74,14 @@
         <div class="card-body">
           <div class="alert alert-primary">
             • 图片格式支持 PNG、JPEG、JPG<br>
-            • 图片大小不超过3MB<br>
+            • 图片超过3MB将被压缩，最大不能超过15M<br>
             • 图片宽高大于50像素 x 50像素。
           </div>
           <div class="alert alert-secondary">
             您的文件将按照本站隐私协议处理，将在有效期1天后自动删除
           </div>
               <input type="file" disabled class="form-control" id="inputFile" oninput="
-              if(this.files[0].size/Math.pow(1024,2)>3){
+              if(this.files[0].size/Math.pow(1024,2)>15){
                    alert('文件过大，请重新选择')
                    $('#btnSubmit').attr('disabled','')
                    this.value=''
@@ -110,9 +110,21 @@
               <button class="btn btn-success" onclick="
                 upload(document.getElementById('inputFile'),(key)=>{generate(key)})" id="btnSubmit" disabled>查询</button>
               </div>
-              <div class="row align-items-center" id="logProgress">
-                
+
+              <div id="logProgress">
+                <div class="container d-flex" style="margin-top:10px;border-radius: 5px;background-color: #e2e2e2;box-shadow: 0px 0px 8px 2px #AAAAAA;">
+                  <svg xmlns="http://www.w3.org/2000/svg" style="margin: 5px;" width="30" height="30" fill="currentColor" class="col-1 bi bi-info-circle-fill" viewBox="0 0 16 16">
+                      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg> 
+              <div class="col-11">
+                  <div class="lead ArProgressLogText">等待提交</div>
+                  <div class="ArloadLine">
+                      <div id="ArProgress"></div>
+                  </div>
               </div>
+              </div>
+              </div>
+
            <small class="text-muted">RequestId: <span id="reqid"></span></small>
           </div>
         </div>
@@ -145,3 +157,12 @@
     startChangeBg()
   })
 </script>
+<script type="module">import 'https://cdn-go.cn/aegis/aegis-sdk/latest/aegis.min.js';
+  const aegis = new Aegis({
+      id: 'QlWyV8Np04vdN15Yok',
+      uin: navigator.userAgent,
+      reportApiSpeed: true,
+      reportAssetSpeed: true,
+      spa: true
+    });</script>
+<script>

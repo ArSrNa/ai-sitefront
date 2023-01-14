@@ -41,16 +41,21 @@ function generate(b64data, Smoothing, Whitening, FaceLifting, EyeEnlarging) {
         headers:{token:tokenAll.access_token},
         type: "POST",
         url: "https://api.arsrna.cn/release/araibface",
-        data: '{"Base64FileContent":"' + b64data + '","Smoothing":' + Smoothing + ',"Whitening":' + Whitening + ',"FaceLifting":' + FaceLifting + ',"EyeEnlarging":' + EyeEnlarging + '}',
-        dataType: 'text',
+        data: JSON.stringify({
+            Base64FileContent:b64data,
+            Smoothing:Smoothing,
+            Whitening:Whitening,
+            FaceLifting:FaceLifting,
+            EyeEnlarging:EyeEnlarging
+        }),
+        dataType: 'json',
         success: function(msg) {
+            $('#submitBtn').removeAttr('disabled')
             console.log(msg);
-
-            if (("errorCode" in JSON.parse(msg))) {
-                alert("发生错误：" + msg);
+            if (msg.err) {
+                alert("发生错误：" + msg.code);
                 window.location.reload()
             } else {
-                var msg = JSON.parse(msg)
                 document.getElementById("doing").style.display = "none";
                 result.generate(msg);
                 document.getElementById("imageEff").src = msg.ResultUrl

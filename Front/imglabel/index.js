@@ -1,6 +1,7 @@
 $('#logProgress').hide()
 
 function upload(file,callback){
+  $('#btnSubmit').attr('disabled','')
   fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
   filePath=`/ai/label/${userInfo.id}/${fileRandomKey}`
   $('#logProgress').show()
@@ -11,12 +12,20 @@ function upload(file,callback){
     Key: filePath,              /* 必须 */
     StorageClass: 'STANDARD',
     Body: file.files[0], // 上传文件对象
+    Headers:{
+      'Pic-Operations': 
+        JSON.stringify({
+          "is_pic_info": 1,
+          "rules": [{
+              "fileid": `${filePath}_cop`,
+              "rule": "imageMogr2/thumbnail/4665600@"
+          }]
+        })
+    },
     onProgress: function(progressData) {
         console.log(JSON.stringify(progressData));
-        $('#logProgress').html(`<p id="logs" class="col lead">
-        ArAI 提交中  ${((progressData.speed/1024).toFixed(2))} kB/s
-        </p>
-        <div class="spinner-border ms-auto col-1" role="status" aria-hidden="true"></div>`)
+        $('.ArProgressLogText').html(`上传中 ${(progressData.percent)*100}% | ${(progressData.speed/1000000).toFixed(2)} MB/s`)
+        $('#ArProgress').width(`${(progressData.percent)*100}%`)
     }
 }, function(err, data) {
     console.log(err || data);
@@ -26,15 +35,13 @@ function upload(file,callback){
     }
     //执行回调
     callback(filePath)
-    COSDownload(filePath,{},
-    function(msg){
-      $('#origin').attr('src',msg);
-    })
-});
+})
 }
 
 function generate(key){
-   COSDownload(key,{},function(msg){
+  $('.ArProgressLogText').html(`TIIA 处理中...`)
+   COSDownload(`${key}_cop`,{},function(msg){
+    $('#origin').attr('src',msg);
       $.ajax({
         url:'https://api.ai.arsrna.cn/release/imglabel',
         data:{ImageUrl:msg},
@@ -43,6 +50,13 @@ function generate(key){
         },
         dataType:'json',
         success(data){
+          if(data.error){
+            layer.open({
+              title: "发生错误",
+              content: `错误：${data.err.code}`,
+            });
+          }
+          $('.ArProgressLogText').html(`完成`)
           let template = [
             {"<>":"li","class":"list-group-item","html":"${Name} / ${FirstCategory} / ${SecondCategory}"},
             {"<>":"div","class":"progress","html":[

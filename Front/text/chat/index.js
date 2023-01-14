@@ -5,6 +5,7 @@ function getKey() {
 }
 
 function send(text){
+  $('#sendMsg').val('')
   generateLoad('等待中','.logProgress')
   if(text==''){alert('请输入内容')}else{
     addMsg.self(text)
@@ -21,8 +22,15 @@ function send(text){
       dataType:'json',
       success(msg){
        console.log(msg)
-       addMsg.bot(msg)
+       if(msg.success){
+        addMsg.bot(msg)
+       }else{
+        alert('发生错误：'+ msg)
+       }
+       
        $('.logProgress').html('')
+      },error(msg){
+        alert('发生错误：'+ msg)
       }
    }) 
   }
