@@ -1,66 +1,81 @@
-function ToBase64() {
-    var img = document.getElementById('imgfile');
-    if (img.value == '') {
-        alert('请选择照片！');
-    } else {
-        document.getElementById('doing').style.display = '';
+function upload(file,callback){
+    fileRandomKey = `ArAI_${parseInt(Math.random()*1000)}_${new Date().getTime()}_${file.files[0].name}`
+    filePath = `/ai/face_beauty/${userInfo.id}/${fileRandomKey}`
+    $('#logProgress').show()
+    $('#logs').html(`ArAI 文件上传中`);
+    cos.putObject({
+      Bucket: Bucket, /* 必须 */
+      Region: Region,     /* 存储桶所在地域，必须字段 */
+      Headers:{
+        'Pic-Operations': 
+          JSON.stringify({
+            "is_pic_info": 1,
+            "rules": [{
+                "fileid": `${filePath}_cop`,
+                "rule": `imageMogr2/thumbnail/${1920*1920}@`
+            }]
+          })
+      },
+      Key: filePath,              /* 必须 */
+      StorageClass: 'STANDARD',
+      Body: file.files[0], // 上传文件对象
+      onProgress: function(progressData) {
+          $('#btnSubmit').attr('disabled','')
+          console.log(JSON.stringify(progressData));
+          $('.ArProgressLogText').html(`上传中 ${(progressData.percent)*100}% | ${(progressData.speed/1000000).toFixed(2)} MB/s`)
+          $('#ArProgress').width(`${(progressData.percent)*100}%`)
+      }
+  }, function(err, data) {
+      console.log(err || data);
+      $('#cosreqid').html(data.RequestId)
+      if(err){
+        layer.open({
+            title: "上传时发生错误",
+            content: `错误：${err}`,
+          });
+      }
+      //执行回调
+      callback(`${filePath}_cop`)
+  });
+  }
 
-        /*转换base64*/
-        var imgFile = new FileReader();
-        imgFile.readAsDataURL(img.files[0]);
-
-        imgFile.onload = function() {
-            var imgData = this.result; //base64数据  
-            var b64head = imgData.substring(0, imgData.indexOf(','));
-            var b64data = imgData.substring(imgData.indexOf(',') + 1);
-
-            //console.log(imgData);
-            //console.log(b64head + imgData);
-            //dashStart(imgData);
-            display(b64head, b64data);
-            var input = document.getElementsByClassName('beautyRange');
-            var Smoothing = parseInt(input[0].value);
-            var Whitening = parseInt(input[1].value);
-            var FaceLifting = parseInt(input[2].value);
-            var EyeEnlarging = parseInt(input[3].value);
-            generate(b64data, Smoothing, Whitening, FaceLifting, EyeEnlarging);
-            //console.log(b64data)
-        }
-    }
-}
-
-function display(head, data) {
-    document.getElementById('imageOri').src = head + ',' + data;
-    var fileName = document.getElementById('imgfile').files[0].name;
-    document.getElementById('fileName').innerHTML = fileName;
-}
 
 
-function generate(b64data, Smoothing, Whitening, FaceLifting, EyeEnlarging) {
+
+function generate(url, Smoothing, Whitening, FaceLifting, EyeEnlarging) {
+    $('.ArProgressLogText').html(`FMU 处理中...`)
     $.ajax({
         headers:{token:tokenAll.access_token},
-        type: "POST",
-        url: "https://api.arsrna.cn/release/araibface",
-        data: JSON.stringify({
-            Base64FileContent:b64data,
-            Smoothing:Smoothing,
-            Whitening:Whitening,
-            FaceLifting:FaceLifting,
-            EyeEnlarging:EyeEnlarging
-        }),
-        dataType: 'json',
-        success: function(msg) {
+        url: "https://api.ai.arsrna.cn/release/fmu",
+        data: {
+            options:JSON.stringify({
+            "Url": url,
+            "Smoothing": parseInt(Smoothing),
+            "Whitening": parseInt(Whitening),
+            "FaceLifting": parseInt(FaceLifting),
+            "EyeEnlarging": parseInt(EyeEnlarging),
+            "RspImgType": "url"
+        })
+    },
+        complete(){
             $('#submitBtn').removeAttr('disabled')
+        },
+        success: function(msg) {
+            $('.ArProgressLogText').html('完成')
             console.log(msg);
-            if (msg.err) {
-                alert("发生错误：" + msg.code);
-                window.location.reload()
-            } else {
-                document.getElementById("doing").style.display = "none";
-                result.generate(msg);
-                document.getElementById("imageEff").src = msg.ResultUrl
+            if(msg.error){
+                layer.open({
+                    title: "FMU处理过程中发生错误",
+                    content: `错误：${msg.data.code}
+                    <hr>
+                    <small>RequestID: ${msg.data.requestId}</small>`,
+                  });
             }
-
+            $('#imageEff').attr('src',msg.ResultUrl)
+            $('#downloadRes').html(`<a href="${msg.ResultUrl}" target="_blank">${msg.ResultUrl}</a>`)
+            $('#reqid').html(msg.RequestId)
+            $('#imageOri,#imageEff').css('filter','')
+            $('#imgfile').val('')
         },
 
         error: function(err) {
@@ -71,13 +86,6 @@ function generate(b64data, Smoothing, Whitening, FaceLifting, EyeEnlarging) {
     });
 }
 
-var result = {
-    generate: function(msg) {
-        var resultT = document.getElementsByClassName('lead pti');
-        resultT[0].innerHTML = msg.RequestId;
-        resultT[1].innerHTML = '<a href="' + msg.ResultUrl + '" target="_blank">' + msg.ResultUrl + '</a>';
-    },
-}
 
 
 function rangeChange() {
@@ -86,3 +94,34 @@ function rangeChange() {
         document.getElementsByClassName('brText')[c3].innerHTML = range[c3].value;
     }
 }
+
+$(document).ready(()=>{
+    $('#imgfile').change((msg)=>{
+        if(msg.target.files[0].size/1000000>=5){
+            layer.msg('文件过大，请重新选择')
+            msg.target.value=''
+            msg.target.click()
+        }
+    })
+
+    $('#submitBtn').click(function(){
+        $('#imageOri,#imageEff').css('filter','blur(5px) brightness(0.5)')
+        if($('#imgfile')[0].files.length==0){
+            layer.msg('请先选择文件')
+        }else{
+        upload($('#imgfile')[0],(key)=>{
+            COSDownload(key,{},function(msg){
+                console.log([key,msg])
+                $('#imageOri').attr('src',msg)
+                var input = document.getElementsByClassName('beautyRange');
+                var Smoothing = input[0].value;
+                var Whitening = input[1].value;
+                var FaceLifting = input[2].value;
+                var EyeEnlarging = input[3].value;
+                generate(msg, Smoothing, Whitening, FaceLifting, EyeEnlarging);
+            })
+         });
+         this.setAttribute('disabled','')
+        }
+    })
+})
