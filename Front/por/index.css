@@ -28,3 +28,37 @@
 	position:relative;
 	height:auto;
 }
+
+.arloading {
+	height: 5px;
+	width: 50px;
+	position: relative;
+	background-color:#0064FF;
+	animation-name: loading;
+	animation-timing-function: linear;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	overflow:hidden;
+	}
+			
+	@keyframes loading {
+		0% {left: -15%;}
+		100% {left: 100%;}
+	}		
+	
+	.ar-line {
+	overflow:hidden;
+	z-index: -10;
+			}
+	
+	.bg {
+	 box-shadow: 0px 0px 8px 2px #AAAAAA;
+	}
+
+#doing{
+	transition: filter .5s ease-in-out;
+}
+
+#resProgress{
+	transition:all .5s
+}

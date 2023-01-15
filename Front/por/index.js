@@ -4,9 +4,9 @@ function ToBase64() {
             alert('请选择照片！');
         }
         else {
-            document.getElementById('doing').style.display = '';
-            $('#reshead').html("计算中");
-            $('#resnr').html("计算中");
+            $('#doing').css('filter','opacity(1)');
+            $('#reshead').html("审核中");
+            $('#resnr').html("审核中");
     /*转换base64*/
     var imgFile = new FileReader();
     imgFile.readAsDataURL(img.files[0]);
@@ -38,21 +38,21 @@ function generate(b64data) {
     dataType:'json',
     success: function(msg){
     console.log(msg);
-
+$('#imgfile').val('')
 if(("errorCode" in msg)) {
 	alert("发生错误："+msg);
 	window.location.reload()
 }
 else {
-document.getElementById("doing").style.display="none";
+  $('#doing').css('filter','opacity(0)');
 result.generate(msg);
 }
 
-    },
+},
 
   error: function(err){
     $('#progressMSG').html(`错误 ${err.status} ${err.responseText}`)
-console.log(err.responseJSON);
+    console.log(err.responseJSON);
 //alert('提交失败：' + err.status + err.statusText);
 }
 
@@ -60,33 +60,19 @@ console.log(err.responseJSON);
 }
 
 
-var photo = {
-	review:function(src) {
-layer.open({
-  title: '图片预览',
-  type:1,
-  content: '<img class="img-fluid" alt="aaaaaaaaa" src=' + src + ' />',
-  maxmin: true,
-});     
-	}
-}
-
-
 var result = {
 	generate:function(rej) {
 		var txadv = {"Block":"建议屏蔽","Review":"建议复审","Pass":"建议通过"};
-        var sugIcon = {"Block":"fa-exclamation-triangle","Review":"fa-question-circle","Pass":"fa-check-circle"};
-		var textLabel = {"Normal":"正常","Porn":"色情","Abuse":"谩骂","Ad":"广告","Custom":"自定义图片","Sexy":"性感内容","Illegal":"违法的"};
-		var reshead = $('#reshead');
+    var sugIcon = {"Block":"fa-exclamation-triangle","Review":"fa-question-circle","Pass":"fa-check-circle"};
+		var textLabel = {"Normal":"正常","Porn":"色情","Abuse":"谩骂","Ad":"广告","Custom":"自定义图片","Sexy":"性感内容","Illegal":"违法"};
 		var resnr = $('#resnr');
-		var progress = document.getElementsByClassName('totalProgress');
-		reshead.html('<i class="fa '+sugIcon[rej.Suggestion]+'" aria-hidden="true"></i>'+txadv[rej.Suggestion]);
+		$('#reshead').html(`<i class="fa ${sugIcon[rej.Suggestion]} fa-fw" aria-hidden="true"></i>${txadv[rej.Suggestion]}`);
+    $('#resProgress').css('width',rej.Score+'%')
 
 		if(textLabel[rej.Label]==null) {
-		resnr.html(`${rej.Label} - ${rej.SubLabel}<br />程度：${rej.Score}`);
-		$('#totalHeader').html(`场景：${rej.Label}<br />${txadv[rej.Suggestion]}`);
-    $('#totalResult').html(`${rej.Label} - ${rej.SubLabel}<br />疑似度：${rej.Score}`);
-
+		  resnr.html(`${rej.Label} - ${rej.SubLabel}<br />程度：${rej.Score}`);
+		  $('#totalHeader').html(`场景：${rej.Label}<br />${txadv[rej.Suggestion]}`);
+      $('#totalResult').html(`${rej.Label} - ${rej.SubLabel}<br />疑似度：${rej.Score}`);
 		}
 		else {
         resnr.html(`${textLabel[rej.Label]} - ${rej.SubLabel}<br />程度：${rej.Score}`);
@@ -94,24 +80,8 @@ var result = {
         $('#totalResult').html(`${textLabel[rej.Label]} - ${rej.SubLabel} <br />疑似度：${rej.Score}`);
     }
 
-    $('#totalRes').css('display','')
-       for(iprg=0;iprg<progress.length;iprg++) {
-        progress[iprg].style.width = rej.Score+'%';
-        progress[iprg].innerHTML = rej.Score+"%";
-    }
-
-    var date=new Date();
-    var dateStr=date.getFullYear()+""+mmdd(date.getMonth()+1)+""+mmdd(date.getDate());
-    function mmdd(i) {
-  if (i<10) {
-  	i="0" + i;
-  }
-  return i;
- }
-    resimageURL=`https://bspcms-1256309736.cos.ap-guangzhou.myqcloud.com/ImageDetail/${dateStr}/0/1257609559/${rej.RequestId}.jpg`;
       document.getElementsByClassName('pti')[0].innerHTML = rej.FileMD5;
       document.getElementsByClassName('pti')[1].innerHTML = rej.RequestId;
-      document.getElementsByClassName('pti')[2].innerHTML = '<a href="'+resimageURL+'" target="_blank">'+resimageURL+"</a>";
 
 
 var template = [
