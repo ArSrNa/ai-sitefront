@@ -13,7 +13,7 @@
     animation-duration: 3s;
     animation-fill-mode: both;
     animation-iteration-count:infinite;
-    animation-timing-function: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    animation-timing-function: linear;
 }
 
 @keyframes ArLoadLine {
