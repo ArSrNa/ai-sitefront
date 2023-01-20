@@ -40,7 +40,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="mainNavContent">
 
       </ul>
-      <div class="d-flex lead">
+      <!-- <div class="d-flex lead">
         <div id="user" class="me-2">请登录</div>
         <button class="btn btn-primary" onclick="
     localStorage.setItem('codeVerifier',ArCIAM.generateCV())
@@ -54,7 +54,7 @@
     " id="logoutButton">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
         </button>
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -80,7 +80,7 @@
           </div>
           <textarea class="form-control" id="chat-gpt-input" placeholder="输入描述" rows="3">jQuery如何获取一个元素</textarea>
           <div class="d-grid">
-            <button onclick="callCHATGPT()" class="btn btn-primary" disabled id="submitBtn">
+            <button onclick="callCHATGPT()" class="btn btn-primary" id="submitBtn">
               Click to Answer
               <div class="arloadLine">
                 <div></div>
@@ -88,13 +88,13 @@
             </button>
           </div>
 
-          <div class="alert alert-primary" id="alertLogin">请先登录后再使用
+          <!-- <div class="alert alert-primary" id="alertLogin">请先登录后再使用
             <button class="btn btn-primary" onclick="
               localStorage.setItem('codeVerifier',ArCIAM.generateCV())
               ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));">
               <i class="fa-solid fa-user"></i> 点此登录或注册
             </button>
-          </div>
+          </div> -->
 
         </div>
       </div>
@@ -126,7 +126,7 @@
   $(document).ready(() => {
     $('.arloadLine').hide();
     hljs.initHighlightingOnLoad()
-    getUser('#submitBtn', '#alertLogin');
+    // getUser('#submitBtn', '#alertLogin');
     $('#key').val(localStorage.getItem('key'))
     startChangeBg()
     $('#mainNavContent').html(__html)

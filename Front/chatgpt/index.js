@@ -5,16 +5,20 @@ function callCHATGPT() {
     $('.arloadLine').show();
 
     $.ajax({
-        url: "https://api.ai.arsrna.cn/release/chatgpt/chat",
+        url: "https://api.openai.com/v1/completions",
         type: 'POST',
         headers: {
             'Content-Type': "application/json",
-            'token': tokenAll.access_token
+            'Authorization': `Bearer ${$('#key').val()}`
         },
         data: JSON.stringify({
-            prompt: $("#chat-gpt-input").val(),
-            uid: userInfo.sub,
-            key: $('#key').val()
+            "prompt": $("#chat-gpt-input").val(),
+            "max_tokens": 2048,
+            "temperature": 0.5,
+            "top_p": 1,
+            "frequency_penalty": 0,
+            "presence_penalty": 0,
+            "model": "text-davinci-003"
         }),
 
         success(data) {
