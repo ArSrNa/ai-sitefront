@@ -1,11 +1,13 @@
-var __html=
-`<li class="nav-item active"> <a class="nav-link" href="https://www.arsrna.cn" target="_blank">回到主站</a> </li>
+var __html =
+  `<li class="nav-item active"> <a class="nav-link" href="https://ai.arsrna.cn/" target="_blank">回到主页</a> </li>
+  <li class="nav-item active"> <a class="nav-link" href="https://www.arsrna.cn/" target="_blank">主站</a> </li>
 <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     自然语言</a>
   <ul class="dropdown-menu">
-     <li><a class="dropdown-item" href="https://ai.arsrna.cn/text/chat">智能对话</a></li>
-     <li><a class="dropdown-item" href="https://ai.arsrna.cn/text/passage-analyze">篇章分析</a></li>
+     <li><a class="dropdown-item" href="https://ai.arsrna.cn/text/chat/">智能对话</a></li>
+     <li><a class="dropdown-item" href="https://ai.arsrna.cn/text/passage-analyze/">篇章分析</a></li>
+     <li><a class="dropdown-item" href="https://ai.arsrna.cn/chatgpt/">ChatGPT对话（代理）</a></li>
   </ul>
 </li>
 
@@ -33,35 +35,35 @@ var __html=
 $('#mainNavContent').html(__html)
 
 
-function changeBg(url,select,defaultBg) {
-  if(defaultBg){
+function changeBg(url, select, defaultBg) {
+  if (defaultBg) {
     //选择默认背景时
     $("#bgFilePath").html('默认背景');
-    localStorage.setItem('backgroundURL','https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web');
-  }else{
-     $("#bgFilePath").html(url);
-     localStorage.setItem('backgroundURL',url);
+    localStorage.setItem('backgroundURL', 'https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web');
+  } else {
+    $("#bgFilePath").html(url);
+    localStorage.setItem('backgroundURL', url);
   }
-  localStorage.setItem('backgroundSwitch',select);
+  localStorage.setItem('backgroundSwitch', select);
   location.reload()
 }
 
 function startChangeBg() {
   $('#bgChangeContainer').html(__bgTemp)
   var url = localStorage.getItem('backgroundURL'),
-      open = localStorage.getItem('backgroundSwitch');
-      //背景设置部分
-  if(open=='true'){
+    open = localStorage.getItem('backgroundSwitch');
+  //背景设置部分
+  if (open == 'true') {
     $("#bgFilePath").html(url);
     $("#bgSwitch")[0].checked = true;
-    $('.backgroundImg').attr('src',url)
-  }else{
+    $('.backgroundImg').attr('src', url)
+  } else {
     $(".backgroundImg").remove();
     $("#bgSwitch")[0].checked = false;
   }
 }
 
-var __bgTemp=`<div class="d-grid gap-2">
+var __bgTemp = `<div class="d-grid gap-2">
 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#changeBg">更换背景</button>
 </div>
 

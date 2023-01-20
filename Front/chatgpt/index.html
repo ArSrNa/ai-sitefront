@@ -1,30 +1,39 @@
-<!DOCTYPE html>
-<html lang="zh">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ChatGPT - OpenAI</title>
-    <script src="https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.3.min.js"></script>
-    <link rel="stylesheet" href="https://www.arsrna.cn/css/bootstrap-ar.css">
-    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-s/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script src="https://www.arsrna.cn/js/arauth.js"></script>
-<link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
-<link href="../css/arload.css" rel="stylesheet">
-<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script src="../js/fa.min.js"></script>
-<script src="../login.js"></script>
-<script src="../header.js"></script>
-<script src="../js/load.js"></script>
-<script src="./index.js"></script>
-<link href="./index.css" rel="stylesheet">
-    </head>
-    <nav class="navbar navbar-expand-lg navbar-light nav-blur fixed-top" style="min-height: 60px;">
-      <div class="container-fluid">
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>ChatGPT | ArSrNa</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/favicon.png">
+
+  <script src="https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.3.min.js"></script>
+  <link rel="stylesheet" href="https://www.arsrna.cn/css/bootstrap-ar.css">
+  <script src="https://cdn.bootcdn.net/ajax/libs/marked/4.2.7/marked.min.js"></script>
+
+  <link rel="stylesheet" href="//unpkg.com/@highlightjs/cdn-assets@11.7.0/styles/default.min.css">
+  <script src="//unpkg.com/@highlightjs/cdn-assets@11.7.0/highlight.min.js"></script>
+  <script src="../js/fa.min.js"></script>
+  <script src="../login.js"></script>
+  <script src="../header.js"></script>
+  <script
+    src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-s/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.arsrna.cn/js/arauth.js"></script>
+  <link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="index.js"></script>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light nav-blur fixed-top" style="min-height: 60px;">
+  <div class="container-fluid">
     <a class="navbar-brand" href="#">Ar-Sr-Na AI技能中心</a>
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -34,98 +43,101 @@
       <div class="d-flex lead">
         <div id="user" class="me-2">请登录</div>
         <button class="btn btn-primary" onclick="
-        localStorage.setItem('codeVerifier',ArCIAM.generateCV())
-        ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));
-        " id="loginButton">
+    localStorage.setItem('codeVerifier',ArCIAM.generateCV())
+    ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));
+    " id="loginButton">
           <i class="fa-solid fa-user"></i>
         </button>
         <button class="btn btn-danger" onload="$(this).hide()" onclick="
-        ArCIAM.logout();
-        $.removeCookie('CIAM',{path:'/'})
-        " id="logoutButton">
+    ArCIAM.logout();
+    $.removeCookie('CIAM',{path:'/'})
+    " id="logoutButton">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
         </button>
-        </div> 
+      </div>
     </div>
-    
+
   </div>
 </nav>
 
 
 <div style="display: flex; justify-content: center;overflow: hidden;">
-  <img src="https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web" class="backgroundImg">
+  <img src="https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web"
+    class="backgroundImg">
 </div>
 
-  <body style="padding-top: 70px">
-  <nav aria-label="breadcrumb" class="container">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="https://www.arsrna.cn" target="_blank">Ar-Sr-Na 云计算项目</a></li>
-      <li class="breadcrumb-item"><a href="https://ai.arsrna.cn">AI技能中心</a></li>
-      <li class="breadcrumb-item active" aria-current="page">自然语言分析-闲聊服务</li>
-    </ol>
-  </nav>
+<body style="padding-top: 70px;">
 
   <div class="container">
-    <div class="alert alert-danger">
-      您的文本将在获得结果后自动销毁，本站不会存储任何信息
-    </div>
 
-   <div class="card">
-   <div class="card-header">互动</div>
-   <div class="card-body">
-    <div class="alert alert-primary" id="alertLogin">请先登录后再使用
-      <button class="btn btn-primary" onclick="
-      localStorage.setItem('codeVerifier',ArCIAM.generateCV())
-      ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));">
-        <i class="fa-solid fa-user"></i> 点此登录或注册
-      </button></div>
+    <div class="card-group mb-3" style="min-height: 60vh;">
+      <div class="card">
+        <div class="card-header">描述问题</div>
+        <div class="card-body">
+          <div class="input-group">
+            <input class="form-control" id="key" placeholder="输入秘钥" type="password">
+            <button class="btn btn-primary" onclick="localStorage.setItem('key',$('#key').val())">保存</button>
+          </div>
+          <textarea class="form-control" id="chat-gpt-input" placeholder="输入描述" rows="3">jQuery如何获取一个元素</textarea>
+          <div class="d-grid">
+            <button onclick="callCHATGPT()" class="btn btn-primary" disabled id="submitBtn">
+              Click to Answer
+              <div class="arloadLine">
+                <div></div>
+              </div>
+            </button>
+          </div>
 
-    <div class="input-group">
-      <input id="sendMsg" class="form-control" placeholder="消息内容" maxlength="100" onkeypress="getKey()">
-        <button onclick="
-        send($('#sendMsg').val());" id="submit" class="btn btn-primary">发送</button> 
+          <div class="alert alert-primary" id="alertLogin">请先登录后再使用
+            <button class="btn btn-primary" onclick="
+              localStorage.setItem('codeVerifier',ArCIAM.generateCV())
+              ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));">
+              <i class="fa-solid fa-user"></i> 点此登录或注册
+            </button>
+          </div>
+
+        </div>
       </div>
 
-      <div class="input-group mb-3">
-        <span class="input-group-text">模式</span>
-        <select class="form-control" id="mode">
-          <option value="0" selected>通用闲聊</option>
-          <option value="1">儿童闲聊</option>
-        </select>
-      </div>
-
-      <div class="logProgress"></div>
-
-      <hr>
-        <div style="overflow-y: scroll;overflow-x:hidden;height:50vh">
-          <div id="msg">
-
+      <div class="card">
+        <div class="card-header">回答</div>
+        <div class="card-body">
+          <small class="text-muted" id="req">
+            请求ID：<br>
+            用量：
+          </small>
+          <hr>
+          <div id="chatgpt-response">
+            等待发送...
           </div>
         </div>
       </div>
-    </div> 
 
+    </div>
 
-<div style="height: 20vh;"></div>
-</div>
+    <div class="text-center mb-3">Powered by Ar-Sr-Na | OpenAI ChatGPT</div>
 
-<div id="bgChangeContainer"></div>
-      
-<!-- <script src="https://www.arsrna.cn/footer.js"></script> -->
+    <div id="bgChangeContainer"></div>
 </body>
+
 </html>
+
 <script>
-  $(document).ready(()=>{
-    getUser('#submit','#alertLogin');
+  $(document).ready(() => {
+    $('.arloadLine').hide();
+    hljs.initHighlightingOnLoad()
+    getUser('#submitBtn', '#alertLogin');
+    $('#key').val(localStorage.getItem('key'))
+    startChangeBg()
     $('#mainNavContent').html(__html)
   })
 </script>
 <script type="module">import 'https://cdn-go.cn/aegis/aegis-sdk/latest/aegis.min.js';
   const aegis = new Aegis({
-      id: 'QlWyV8Np04vdN15Yok',
-      uin: navigator.userAgent,
-      reportApiSpeed: true,
-      reportAssetSpeed: true,
-      spa: true
-    });</script>
+    id: 'QlWyV8Np04vdN15Yok',
+    uin: navigator.userAgent,
+    reportApiSpeed: true,
+    reportAssetSpeed: true,
+    spa: true
+  });</script>
 <script>

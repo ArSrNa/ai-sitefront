@@ -1,0 +1,84 @@
+.resimg {
+  opacity: 0.5;
+  /*filter:blur(5px);*/
+  object-fit: contain;
+  max-height: 600px;
+}
+
+.card-img-overlay,
+.resDetail {
+  overflow-y: auto;
+}
+
+.resDetail {
+  max-height: 300px;
+}
+
+.result {
+  min-height: 500px;
+}
+
+.restext {
+  position: absolute;
+  z-index: 5;
+  padding-top: 5%;
+  padding-left: 5%;
+}
+
+.result {
+  position: relative;
+  height: auto;
+}
+
+.backgroundImg {
+  /* transition: opacity .5s;
+	 */
+  margin-top: -70px;
+  z-index: -9999;
+  position: fixed;
+  height: 100vh;
+  min-width: 100vw;
+  object-fit: cover;
+  opacity: 0.5;
+  background-color: white;
+}
+
+.card {
+  backdrop-filter: saturate(2) blur(10px);
+  -webkit-backdrop-filter: saturate(2) blur(10px);
+}
+
+
+.arloadLine {
+  width: 100%;
+  height: 3px;
+  overflow: hidden;
+}
+
+.arloadLine>div {
+  position: relative;
+  width: 10%;
+  height: 3px;
+  animation-name: ArLoadLine;
+  animation-duration: 3s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes ArLoadLine {
+  from {
+    left: -20%;
+    background-color: palevioletred;
+  }
+
+  to {
+    left: 100%;
+    background-color: lawngreen;
+  }
+}
+
+
+#chatgpt-response {
+  font-family: "Consolas";
+}

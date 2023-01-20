@@ -1,66 +1,39 @@
-function getKey() {
-  if (event.keyCode == 13) {
-    send($('#sendMsg').val());
-  }
-}
+function callCHATGPT() {
+    $('#chatgpt-response').html(`请求中......<br><div class="arloadLine"><div></div></div>`);
+    $('#submitBtn').addClass('disabled');
+    $('.arloadLine').show();
 
-function send(text){
-  $('#sendMsg').val('')
-  generateLoad('等待中','.logProgress')
-  if(text==''){alert('请输入内容')}else{
-    addMsg.self(text)
     $.ajax({
-      url:'http://127.0.0.1:1024/sendMsg',
-      data:{
-       msg:text,
-     },
-      // headers:{
-      //   token:tokenAll.access_token
-      // },
-      dataType:'json',
-      success(msg){
-       console.log(msg)
-       addMsg.bot(msg.response)
-       $('.logProgress').html('')
-      },error(msg){
-        alert('发生错误：'+ msg)
-      }
-   }) 
-  }
-  
-  }
+        url: "https://api.ai.arsrna.cn/release/chatgpt/chat",
+        type: 'POST',
+        headers: {
+            'Content-Type': "application/json",
+            'token': tokenAll.access_token
+        },
+        data: JSON.stringify({
+            prompt: $("#chat-gpt-input").val(),
+            uid: userInfo.sub,
+            key: $('#key').val()
+        }),
+
+        success(data) {
+            console.log(data);
+            var htmlMark = marked.parse(data.choices[0].text);
+            $('#chatgpt-response').html(htmlMark);
+            hljs.highlightAll();
+            $('#req').html(`本次对话ID：${data.id}<br>用量：${data.usage.total_tokens}`);
+            $('#submitBtn').removeClass('disabled');
+            $('.arloadLine').hide();
+        },
+
+        error(data) {
+            $('#submitBtn').removeClass('disabled');
+            $('#req').html(`错误请求`);
+            $('#chatgpt-response').html(marked.parse(data.responseText));
+            hljs.highlightAll();
+        }
+
+    })
 
 
-var addMsg={
-  self:function(msg) {
-  var html = $('#msg').html()
-  var tempSelf = `<div style="padding-top:5px" class="text-primary">
-  <small>${moment(new Date().getTime()).format('HH:mm:ss')}</small>
-  <span>我</span>
-  <div class="d-flex">
-  <div class="col-auto">
-  <i class="fa-solid fa-user fa-fw" style="padding-right:5px"></i>
-  </div>
-  <div class="col-11">
-  <span class="lead">${msg}</span>
-  </div></div></div>`;
-  $('#msg').html(tempSelf+html)
-  },
-
-  bot:function(msg){
-  var html = $('#msg').html()
-  var tempOther = `<div style="padding-top:5px">
-  <small class="text-muted">${moment(new Date().getTime()).format('HH:mm:ss')}</small>
-  <span class="text-muted">ArAI</span>
-  <span class="badge bg-primary">${(msg.data.Confidence*100).toFixed(2)}</span>
-  <div class="d-flex">
-  <div class="col-auto">
-  <i class="fa-solid fa-robot fa-fw" style="padding-right:5px"></i>
-  </div>
-  <div class="col-11">
-  <span class="lead">${msg.data.Reply}</span>
-  </div></div></div>`;
-  $('#msg').html(tempOther+html)
-  }
-  
 }
