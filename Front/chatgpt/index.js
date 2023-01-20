@@ -1,4 +1,5 @@
 function callCHATGPT() {
+    if ($('#key').val() == '') { alert('请输入OpenAI API秘钥'); return }
     $('#chatgpt-response').html(`请求中......<br><div class="arloadLine"><div></div></div>`);
     $('#submitBtn').addClass('disabled');
     $('.arloadLine').show();
@@ -29,7 +30,7 @@ function callCHATGPT() {
         error(data) {
             $('#submitBtn').removeClass('disabled');
             $('#req').html(`错误请求`);
-            $('#chatgpt-response').html(marked.parse(data.responseText));
+            $('#chatgpt-response').html(JSON.stringify(data));
             hljs.highlightAll();
         }
 
