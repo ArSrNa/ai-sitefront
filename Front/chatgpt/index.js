@@ -1,8 +1,10 @@
 function callCHATGPT() {
     if ($('#key').val() == '') { alert('请输入OpenAI API秘钥'); return }
-    $('#chatgpt-response').html(`请求中......<br><div class="arloadLine"><div></div></div>`);
+    localStorage.setItem('question', $("#chat-gpt-input").val())
+    localStorage.setItem('key', $('#key').val())
+    $('#chatgpt-response').html(`请求中......<br><div class="arloadLine answerLoad"><div></div></div>`);
     $('#submitBtn').addClass('disabled');
-    $('.arloadLine').show();
+    $('.answerLoad').show();
 
     $.ajax({
         url: "https://api.openai.com/v1/completions",
@@ -28,7 +30,8 @@ function callCHATGPT() {
             hljs.highlightAll();
             $('#req').html(`本次对话ID：${data.id}<br>用量：${data.usage.total_tokens}`);
             $('#submitBtn').removeClass('disabled');
-            $('.arloadLine').hide();
+            $('.answerLoad').hide();
+            viewGrants()
         },
 
         error(data) {
@@ -42,3 +45,23 @@ function callCHATGPT() {
 
 
 }
+
+
+function viewGrants() {
+    $('.balance').html(`<div class="arloadLine"><div></div></div>`);
+    $.ajax({
+        url: 'https://api.openai.com/dashboard/billing/credit_grants',
+        type: 'GET',
+        headers: {
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${$('#key').val()}`
+        },
+        success(msg) {
+            console.log(msg);
+            $('#total').html('$ ' + msg.total_granted);
+            $('#used').html('$ ' + msg.total_used);
+            $('#total_available').html('$ ' + msg.total_available);
+        }
+    })
+};
+

@@ -79,15 +79,30 @@
             <button class="btn btn-primary" onclick="localStorage.setItem('key',$('#key').val())">保存</button>
           </div>
           <textarea class="form-control" id="chat-gpt-input" placeholder="输入描述" rows="3">jQuery如何获取一个元素</textarea>
-          <div class="d-grid">
+          <div class="d-grid mb-3">
             <button onclick="callCHATGPT()" class="btn btn-primary" id="submitBtn">
               Click to Answer
-              <div class="arloadLine">
+              <div class="arloadLine answerLoad">
                 <div></div>
               </div>
             </button>
           </div>
+          <table class="table">
+            <tr>
+              <td>账户总余额</td>
+              <td>已使用</td>
+              <td>剩余</td>
+            </tr>
+            <tr>
+              <td class="balance" id="total">
+              </td>
+              <td class="balance" id="total_available">
+              </td>
+              <td class="balance" id="used">
+              </td>
+            </tr>
 
+          </table>
           <!-- <div class="alert alert-primary" id="alertLogin">请先登录后再使用
             <button class="btn btn-primary" onclick="
               localStorage.setItem('codeVerifier',ArCIAM.generateCV())
@@ -124,10 +139,14 @@
 
 <script>
   $(document).ready(() => {
-    $('.arloadLine').hide();
+    $('.answerLoad').hide();
     hljs.initHighlightingOnLoad()
     // getUser('#submitBtn', '#alertLogin');
     $('#key').val(localStorage.getItem('key'))
+    $('#chat-gpt-input').val(localStorage.getItem('question'))
+    if (!($('#key').val() == '')) {
+      viewGrants()
+    }
     startChangeBg()
     $('#mainNavContent').html(__html)
   })
