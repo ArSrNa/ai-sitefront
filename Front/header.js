@@ -6,7 +6,7 @@ var __html =
     自然语言</a>
   <ul class="dropdown-menu">
      <li><a class="dropdown-item" href="https://ai.arsrna.cn/text/chat/">智能对话</a></li>
-     <li><a class="dropdown-item" href="https://ai.arsrna.cn/text/passage-analyze/">篇章分析</a></li>
+     <li><a class="dropdown-item" href="https://ai.arsrna.cn/text/tia/">篇章分析</a></li>
      <li><a class="dropdown-item" href="https://ai.arsrna.cn/chatgpt/">ChatGPT对话（代理）</a></li>
   </ul>
 </li>
