@@ -13,6 +13,6 @@ inputs:
     # dist: ./dist
     # hook: npm run build
     # websitePath: ./
-  region: ap-hongkong
-  bucketName: arai
+  region: na-siliconvalley
+  bucketName: araifront
   protocol: https
