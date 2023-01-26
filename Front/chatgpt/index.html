@@ -62,7 +62,7 @@
 
 
 <div style="display: flex; justify-content: center;overflow: hidden;">
-  <img src="https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web"
+  <img src="https://st1-res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/aa897f7175cff3480b671198627c5c66_3220987348718611381.png"
     class="backgroundImg">
 </div>
 
@@ -72,13 +72,21 @@
 
     <div class="card-group mb-3" style="min-height: 60vh;">
       <div class="card">
-        <div class="card-header">描述问题</div>
+        <div class="card-header">输入</div>
         <div class="card-body">
           <div class="input-group">
             <input class="form-control" id="key" placeholder="请输入OpenAI API秘钥" type="password">
-            <button class="btn btn-primary" onclick="localStorage.setItem('key',$('#key').val())">保存</button>
+            <button class="btn btn-primary" onclick="localStorage.setItem('key',$('#key').val())">保存秘钥</button>
           </div>
-          <textarea class="form-control" id="chat-gpt-input" placeholder="输入描述" rows="3">jQuery如何获取一个元素</textarea>
+          <select class="form-control" id="model">
+            <option value="text-davinci-003" selected>text-davinci-003</option>
+            <option value="text-curie-001">text-curie-001</option>
+            <option value="text-babbage-001">text-babbage-001</option>
+            <option value="text-ada-001">text-ada-001 (最低价)</option>
+            <option value="code-davinci-002">code-davinci-002 (Codex)</option>
+            <option value="code-cushman-001">code-cushman-001 (Codex)</option>
+          </select>
+          <textarea class="form-control" id="chat-gpt-input" placeholder="输入描述" rows="3"></textarea>
           <div class="d-grid mb-3">
             <button onclick="callCHATGPT()" class="btn btn-primary" id="submitBtn">
               Click to Answer
@@ -142,10 +150,12 @@
     $('.answerLoad').hide();
     hljs.initHighlightingOnLoad()
     // getUser('#submitBtn', '#alertLogin');
-    $('#key').val(localStorage.getItem('key'))
-    $('#chat-gpt-input').val(localStorage.getItem('question'))
     if (!($('#key').val() == '')) {
       viewGrants()
+    } else {
+      $('#key').val(localStorage.getItem('key'));
+      $('#model').val(localStorage.getItem('model'));
+      $('#chat-gpt-input').val(localStorage.getItem('question'));
     }
     startChangeBg()
     $('#mainNavContent').html(__html)

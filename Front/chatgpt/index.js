@@ -2,6 +2,7 @@ function callCHATGPT() {
     if ($('#key').val() == '') { alert('请输入OpenAI API秘钥'); return }
     localStorage.setItem('question', $("#chat-gpt-input").val())
     localStorage.setItem('key', $('#key').val())
+    localStorage.setItem('model', $('#model').val())
     $('#chatgpt-response').html(`请求中......<br><div class="arloadLine answerLoad"><div></div></div>`);
     $('#submitBtn').addClass('disabled');
     $('.answerLoad').show();
@@ -20,7 +21,7 @@ function callCHATGPT() {
             "top_p": 1,
             "frequency_penalty": 0,
             "presence_penalty": 0,
-            "model": "text-davinci-003"
+            "model": $('#model').val()
         }),
 
         success(data) {
@@ -37,7 +38,7 @@ function callCHATGPT() {
         error(data) {
             $('#submitBtn').removeClass('disabled');
             $('#req').html(`错误请求`);
-            $('#chatgpt-response').html(JSON.stringify(data));
+            $('#chatgpt-response').html(data.responseText);
             hljs.highlightAll();
         }
 
