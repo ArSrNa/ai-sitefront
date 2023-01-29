@@ -18,6 +18,7 @@ var __html =
     <ul class="dropdown-menu">
        <li><a class="dropdown-item" href="https://ai.arsrna.cn/por/">鉴黄</a></li>
        <li><a class="dropdown-item" href="https://ai.arsrna.cn/imglabel/">图像标签</a></li>
+       <li><a class="dropdown-item" href="https://ai.arsrna.cn/face-analyze/">人脸分析</a></li>
     </ul>
   </li>
 
