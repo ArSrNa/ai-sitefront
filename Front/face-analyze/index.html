@@ -1,30 +1,33 @@
 <!DOCTYPE html>
 <html lang="zh">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ArAI-人脸识别-人脸与五官识别</title>
-    <script src="https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.3.min.js"></script>
-    <link rel="stylesheet" href="https://www.arsrna.cn/css/bootstrap-ar.css">
-    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-s/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/json2html/2.2.1/json2html.min.js"></script>
-<script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-ms/layer/3.5.1/layer.min.js"></script>
-<script src="https://www.arsrna.cn/js/arauth.js"></script>
-<link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
-<script src="../js/cos-js-sdk-v5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script src="../login.js"></script>
-<script src="../js/cos.js"></script>
-<script src="./index.js"></script>
-<link href="./index.css" rel="stylesheet">
-    </head>
-    <nav class="navbar navbar-expand-lg navbar-light nav-blur fixed-top" style="min-height: 60px;">
-      <div class="container-fluid">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ArAI-人脸识别-人脸与五官识别</title>
+  <script src="https://upcdn.b0.upaiyun.com/libs/jquery/jquery-2.0.3.min.js"></script>
+  <link rel="stylesheet" href="https://www.arsrna.cn/css/bootstrap-ar.css">
+  <script
+    src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-s/twitter-bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+  <link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/json2html/2.2.1/json2html.min.js"></script>
+  <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-ms/layer/3.5.1/layer.min.js"></script>
+  <script src="https://www.arsrna.cn/js/arauth.js"></script>
+  <link href="https://www.arsrna.cn/css/armain.css" rel="stylesheet">
+  <script src="../js/cos-js-sdk-v5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+  <script src="../login.js"></script>
+  <script src="../js/cos.js"></script>
+  <script src="./index.js"></script>
+  <link href="./index.css" rel="stylesheet">
+</head>
+<nav class="navbar navbar-expand-lg navbar-light nav-blur fixed-top" style="min-height: 60px;">
+  <div class="container-fluid">
     <a class="navbar-brand" href="#">Ar-Sr-Na AI技能中心</a>
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -45,19 +48,20 @@
         " id="logoutButton">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
         </button>
-        </div> 
+      </div>
     </div>
-    
+
   </div>
 </nav>
 
 
-    <div style="display: flex; justify-content: center;overflow: hidden;">
-      <img src="https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web" class="backgroundImg">
-    </div>
+<div style="display: flex; justify-content: center;overflow: hidden;">
+  <img src="https://res.arsrna.cn/%E5%B4%A9%E5%9D%8F3/307e97670bccb52217793c37875db3b6_4575220996410919312.png_web"
+    class="backgroundImg">
+</div>
 
-  <body style="padding-top: 70px">
-<script src="../header.js"></script>
+<body style="padding-top: 70px">
+  <script src="../header.js"></script>
   <nav aria-label="breadcrumb" class="container">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="https://www.arsrna.cn" target="_blank">Ar-Sr-Na 云计算项目</a></li>
@@ -69,13 +73,13 @@
   <div class="container">
     <div class="row mb-3">
       <div class="col-lg-6">
-      <div class="card">
-        <div class="card-header">文件输入配置</div>
-        <div class="card-body">
-          <div class="alert alert-secondary">
-            您的文件将按照本站隐私协议处理，将在有效期1天后自动删除
-          </div>
-              <input type="file" disabled class="form-control" id="inputFile" oninput="
+        <div class="card">
+          <div class="card-header">文件输入配置</div>
+          <div class="card-body">
+            <div class="alert alert-secondary">
+              您的文件将按照本站隐私协议处理，将在有效期1天后自动删除
+            </div>
+            <input type="file" disabled class="form-control" id="inputFile" oninput="
               if(this.files[0].size/Math.pow(1024,2)>10){
                    alert('文件过大，请重新选择')
                    $('#btnSubmit').attr('disabled','')
@@ -89,116 +93,150 @@
                    $('#btnSubmit').removeAttr('disabled')
                  }
                  " accept="image/*">
-                <div class="alert alert-danger mb-3">
-                 - 上传大小不可超过10M；图像超过5M，将经过压缩<br>
-                 - 长边像素不可超过2000，若超过，图像将经过压缩<br>
-                </div>
+            <div class="alert alert-danger mb-3">
+              - 上传大小不可超过10M；图像超过5M，将经过压缩<br>
+              - 长边像素不可超过2000，若超过，图像将经过压缩<br>
+            </div>
 
-              <label id="maxFaceCountLabel" class="lead">最大检测数：1</label>
-              <input type="range" class="form-range" id="maxFaceCount" max="10" min="1" value="1"
+            <label id="maxFaceCountLabel" class="lead">最大检测数：1</label>
+            <input type="range" class="form-range" id="maxFaceCount" max="10" min="1" value="1"
               oninput="$('#maxFaceCountLabel').html(`最大检测数：${this.value}`)" disabled>
-              <div class="alert alert-danger mb-3">开发能力有限，仅支持最大1个人脸识别</div>
-                
-              <fieldset>
-                  <div class="lead">选择评测对象</div>
-                  <div class="row container" id="detectContainer" disabled>
-                  </div>
-                </fieldset>
-                <div class="alert alert-danger">请不要开太多，越多速度越慢，代数级增长</div>
-              
-              
-              <div class="alert alert-primary" id="alertLogin">请先登录后再使用
-                <button class="btn btn-primary" onclick="
+            <div class="alert alert-danger mb-3">开发能力有限，仅支持最大1个人脸识别</div>
+
+            <fieldset>
+              <div class="lead">选择评测对象</div>
+              <div class="row container" id="detectContainer" disabled>
+              </div>
+            </fieldset>
+            <div class="alert alert-danger">请不要开太多，越多速度越慢，代数级增长</div>
+
+
+            <div class="alert alert-primary" id="alertLogin">请先登录后再使用
+              <button class="btn btn-primary" onclick="
                 localStorage.setItem('codeVerifier',ArCIAM.generateCV())
                 ArCIAM.redirectPKIE(location.href,localStorage.getItem('codeVerifier'));">
-                  <i class="fa-solid fa-user"></i> 点此登录或注册
-                </button></div>
+                <i class="fa-solid fa-user"></i> 点此登录或注册
+              </button>
+            </div>
 
-              <hr>
+            <hr>
 
             <div class="d-grid gap-2  mb-3">
               <button class="btn btn-success" onclick="
                 upload(document.getElementById('inputFile'),
                 (key)=>{generate(key)})" id="btnSubmit" disabled>分析</button>
-              </div>
-            
-              <div id="logProgress">
-                <div class="container d-flex" style="margin-top:10px;border-radius: 5px;background-color: #e2e2e2;box-shadow: 0px 0px 8px 2px #AAAAAA;">
-                  <svg xmlns="http://www.w3.org/2000/svg" style="margin: 5px;" width="30" height="30" fill="currentColor" class="col-1 bi bi-info-circle-fill" viewBox="0 0 16 16">
-                      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                    </svg> 
-              <div class="col-11">
+            </div>
+
+            <div id="logProgress">
+              <div class="container d-flex"
+                style="margin-top:10px;border-radius: 5px;background-color: #e2e2e2;box-shadow: 0px 0px 8px 2px #AAAAAA;">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin: 5px;" width="30" height="30" fill="currentColor"
+                  class="col-1 bi bi-info-circle-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </svg>
+                <div class="col-11">
                   <div class="lead ArProgressLogText">等待提交</div>
                   <div class="ArloadLine">
-                      <div id="ArProgress"></div>
+                    <div id="ArProgress"></div>
                   </div>
+                </div>
               </div>
-              </div>
-              </div>
-           
-              <div class="row align-items-center mb-3" id="logProgress"></div>
-              <small class="text-muted">
-                  COSRequestId: <span id="cosreqid"></span>
+            </div>
+
+            <div class="row align-items-center mb-3" id="logProgress"></div>
+            <small class="text-muted">
+              COSRequestId: <span id="cosreqid"></span>
               <br>IAIRequestId: <span id="iaireqid"></span>
-              </small>
+            </small>
           </div>
         </div>
-        </div>
-      
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">图像分析</div>
-            <div class="card-body">
-              <div style="display: flex;">
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header">图像分析</div>
+          <div class="card-body">
+            <div style="display: flex;">
               <div id="resimg"></div>
               <!-- <div style="position: relative;"></div> -->
               <div id="rectangle">Face1</div>
             </div>
 
-              <div id="imgAnalysis">
-                <div id="generalScore" class="display-6">总体评分：100</div>
-                <div class="progress">
-                  <div id="generalScoreProg" class="progress-bar" style="width: 100%;">100</div>
+            <div id="imgAnalysis">
+              <div class="container d-flex"
+                style="margin-top:10px;border-radius: 5px;background-color: #e2e2e2;box-shadow: 0px 0px 8px 2px #AAAAAA;">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin: 5px;" width="30" height="30" fill="currentColor"
+                  class="col-1 bi bi-info-circle-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </svg>
+                <div class="col-11">
+                  <div class="lead">总评分：<span id="Score"></span></div>
+                  <div class="ArloadLine">
+                    <div id="ScoreProgress"></div>
+                  </div>
                 </div>
-                
-                <div class="alert alert-secondary">开发能力有限，仅展示部分数据，所有数据请
+              </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">项目</th>
+                    <th scope="col">判断</th>
+                  </tr>
+                </thead>
+                <tbody id="resultTab">
+
+                </tbody>
+              </table>
+
+              <div class="alert alert-secondary">仅展示部分数据，所有数据请
                 <button onclick="displayAll()" class="btn btn-primary">点此</button>
               </div>
-              </div>
-              
-
-                
-              </div>
             </div>
-          </div>          
+
+
+
+          </div>
         </div>
-</div> 
+      </div>
+    </div>
+  </div>
 
 
 
 
 
 
-<!-- <div class="card">
+  <!-- <div class="card">
   <div class="card-header">处理原理</div>
   <div class="card-body">
     <img src="images/model.png" class="img-fluid" alt="">
   </div>
 </div> -->
 
-<div id="bgChangeContainer"></div>
+  <div id="bgChangeContainer"></div>
 
-<div style="height: 20vh;"></div>
-</div>
+  <div style="height: 20vh;"></div>
+  </div>
 
-      
-<!-- <script src="https://www.arsrna.cn/footer.js"></script> -->
+
+  <!-- <script src="https://www.arsrna.cn/footer.js"></script> -->
 </body>
+
 </html>
 <script>
-  $(document).ready(()=>{
+  $(document).ready(() => {
     generateHtml()
-    getUser('#inputFile,#detectContainer,.detectObject','#alertLogin')
-    startChangeBg()
+    $('#rectangle').hide();
+    getUser('#inputFile,#detectContainer,.detectObject', '#alertLogin')
+    startChangeBg();
+    $('#resultTab').html(json2html.transform(resultTable, {
+      "<>": "tr", "html": [
+        { "<>": "td", "scope": "col", "html": "${label}" },
+        { "<>": "td", "scope": "col", "id": "judge_${type}", "html": "" },
+      ]
+    }))
   })
 </script>

@@ -1,81 +1,86 @@
 .resimg {
-	opacity:0.5;
+	opacity: 0.5;
 	/*filter:blur(5px);*/
-	object-fit:contain;
+	object-fit: contain;
 	max-height: 600px;
 }
 
-.card-img-overlay,.resDetail {
+.card-img-overlay,
+.resDetail {
 	overflow-y: auto;
 }
 
-.resDetail{
+.resDetail {
 	max-height: 300px;
 }
 
 .result {
-	min-height:500px;
+	min-height: 500px;
 }
 
 .restext {
-	position:absolute;
-	z-index:5;
-	padding-top:5%;
-	padding-left:5%;
+	position: absolute;
+	z-index: 5;
+	padding-top: 5%;
+	padding-left: 5%;
 }
 
 .result {
-	position:relative;
-	height:auto;
+	position: relative;
+	height: auto;
 }
 
-.backgroundImg{
+.backgroundImg {
 	/* transition: opacity .5s;
 	 */
-	 margin-top: -70px;
-	 z-index: -9999;
-	 position: fixed;
-	 height: 100vh;
-	 min-width: 100vw;
-	 object-fit: cover;
-	 opacity: 0.5;
-	 background-color: white;
-   }
+	margin-top: -70px;
+	z-index: -9999;
+	position: fixed;
+	height: 100vh;
+	min-width: 100vw;
+	object-fit: cover;
+	opacity: 0.5;
+	background-color: white;
+}
 
 .card {
 	backdrop-filter: saturate(2) blur(10px);
 	-webkit-backdrop-filter: saturate(2) blur(10px);
-  }
-  
-
-  legend {
-    background-color: #000;
-    color: #fff;
-    padding: 3px 6px;
 }
 
 
-#origin{
+legend {
+	background-color: #000;
+	color: #fff;
+	padding: 3px 6px;
+}
+
+
+#origin {
 	z-index: -10;
 	position: relative;
 }
 
-#rectangle{
+#rectangle {
 	z-index: 0;
 	position: absolute;
-	border: 2px solid #000;
+	border: 2px solid royalblue;
+	color: royalblue;
+	border-style: dotted;
+	transition: margin .5s ease-in-out;
 }
 
-.ArloadLine{
-    width: 100%;
-    height: 3px;
-    overflow: hidden;
+.ArloadLine {
+	width: 100%;
+	height: 3px;
+	overflow: hidden;
+	background-color: beige;
 }
 
-.ArloadLine>div{
-    position: relative;
-    width: 0px;
-    height: 3px;
-    background-color: royalblue;
+.ArloadLine>div {
+	position: relative;
+	width: 0px;
+	height: 3px;
+	background-color: royalblue;
 	transition: width 1s;
 }
