@@ -27,7 +27,11 @@
   <link rel="stylesheet" href="style.css">
   <script src="index.js"></script>
 </head>
-
+<script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+<script>
+  // VConsole 默认会挂载到 `window.VConsole` 上
+  var vConsole = new window.VConsole();
+</script>
 <nav class="navbar navbar-expand-lg navbar-light nav-blur fixed-top" style="min-height: 60px;">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Ar-Sr-Na AI技能中心</a>

@@ -38,7 +38,7 @@ function callCHATGPT() {
         error(data) {
             $('#submitBtn').removeClass('disabled');
             $('#req').html(`错误请求`);
-            $('#chatgpt-response').html(data.responseText);
+            $('#chatgpt-response').html(data);
             hljs.highlightAll();
         }
 
