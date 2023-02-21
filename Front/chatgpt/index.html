@@ -160,6 +160,8 @@
       $('#key').val(localStorage.getItem('key'));
       $('#model').val(localStorage.getItem('model'));
       $('#chat-gpt-input').val(localStorage.getItem('question'));
+      $('#chatgpt-response').html(localStorage.htmlMark);
+
     }
     startChangeBg()
     $('#mainNavContent').html(__html)

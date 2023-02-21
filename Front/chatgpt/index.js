@@ -29,6 +29,8 @@ function callCHATGPT() {
             var htmlMark = marked.parse(data.choices[0].text);
             $('#chatgpt-response').html(htmlMark);
             hljs.highlightAll();
+            localStorage.setItem('lastConv',htmlMark);
+  
             $('#req').html(`本次对话ID：${data.id}<br>用量：${data.usage.total_tokens}`);
             $('#submitBtn').removeClass('disabled');
             $('.answerLoad').hide();
