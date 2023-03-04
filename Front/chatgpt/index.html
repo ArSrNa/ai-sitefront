@@ -103,6 +103,9 @@
             <option value="code-cushman-001">code-cushman-001 (Codex)</option>
           </select> -->
           <textarea class="form-control" id="chat-gpt-input" placeholder="输入描述" rows="3"></textarea>
+          <label class="form-label">随机因子 <span id="temperatureLab">0.9</span></label>
+          <input type="range" class="form-range" id="temperature" value="0.9" step="0.1" min="0" max="1"
+            oninput="$('#temperatureLab').html(this.value)">
           <div class="d-grid mb-3">
             <button onclick="callCHATGPT()" class="btn btn-primary" id="submitBtn">
               Click to Answer
@@ -110,6 +113,7 @@
                 <div></div>
               </div>
             </button>
+
           </div>
           <table class="table">
             <tr>

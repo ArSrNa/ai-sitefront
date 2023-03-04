@@ -12,7 +12,7 @@ function callCHATGPT() {
         "session": "N/A",
         "prompt": $("#chat-gpt-input").val(),
         "max_tokens": 4000,
-        "temperature": 0.8,
+        "temperature": $('#temperature').val(),
         "top_p": 1,
         "frequency_penalty": 0,
         "presence_penalty": 0,
@@ -22,7 +22,7 @@ function callCHATGPT() {
         "session": "N/A",
         "prompt": $("#chat-gpt-input").val(),
         "model": "gpt-3.5-turbo",
-        "temperature": 0.8,
+        "temperature": $('#temperature').val(),
         "maxTokens": 1024,
         "maxResults": 1
     }]
